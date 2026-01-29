@@ -119,7 +119,7 @@ To minimize data exposure and breach risks create a database USER for Python mod
 
 Run `files_watch.py` then add file or files to a configured folder and `main:process_files` will process ONLY the added files. 
 
-Run `files_import.py` to ingest all unprocessed files in all configured folders. `main:process_files` executes `config.json` Processes for status = 'Active'.
+Run `files_import.py` and `main:process_files` executes `config.json` Processes for status = 'Active' which will ingest all unprocessed files in all configured folders.
 
 Next time `files_import.py` is run only new files since last run will be processed. It knows what files have been imported.
 
