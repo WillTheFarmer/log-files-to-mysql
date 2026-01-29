@@ -42,7 +42,9 @@ I stripped the other format code as starting point. From documentation I read NG
 
 The Apache and NGINX code demonstrates how to incorporate without code modification of current processes.
 
-I am straight out on this and other projects but committed to this code cleanup until Ground Hog Day.
+Until Ground Hog Day I am full-time on Python Code cleanup and NGINX formats. 
+
+Anyone with lots of NGINX log files who wants to contribute NGINX log format knowledge or import data results would be helpful and welcomed.
 ### Process properties - Application Processes
 ![Process Properties](./images/process_properties.png)
 
