@@ -24,9 +24,11 @@ Many `config.json` datasets are `data_file_loader.py` and `database_module.py` m
 
 4) `main:process_files` can be passed `collection Filter` parameter. It can be a Process list (processID) to execute for any number of reasons. This makes the App more integrable and adaptable.
 
-5) All ***Observers*** watch for the arrival of new unprocessed files in a directory path.
+5) All ***Observers*** watch using ***Observer datasets*** attributes : `path`, `recursive`, `interval` for the arrival of new files in `path` values.
 
-Each Observer has a `process_list` property - `[processid]` subset of `id` property from `config.json` Processes collection. The `process_list` property and watchdog `event.src_path` property are passed to `main:process_files` which overrides configured Process executions.
+Each Observer attributes also has a `process_list` property. The `process_list` holds a Python List of `[processid]`. It is a subset of `id` property from `config.json` Processes collection. 
+
+The `process_list` property and watchdog `event.src_path` property are passed to `main:process_files` which overrides configured Process executions.
 
 Multiple folders and formats can be processed running different Observers with properties for different log formats and paths.
 
