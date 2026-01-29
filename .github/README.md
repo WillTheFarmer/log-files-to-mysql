@@ -20,7 +20,7 @@ To process different log format files in different directories the `config.json`
 
 Many `config.json` datasets are `data_file_loader.py` and `database_module.py` module reuse with different `attributes` property values.
 
-3) All ***Process Modules*** have a `process` method and each Process Module has a `ProcessProperties` subclass. 
+3) All ***Process Modules*** have a `process` method and each Process Module has a ***ProcessProperties*** subclass `properties_process.py`. 
 
 4) `main:process_files` can be passed `collection Filter` parameter. It can be a Process list (processID) to execute for any number of reasons. This makes the App more integrable and adaptable.
 
