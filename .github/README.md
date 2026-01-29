@@ -22,7 +22,7 @@ Many `config.json` datasets are `data_file_loader.py` and `database_module.py` m
 
 3) All ***Process Modules*** have `process` method and ***ProcessProperties*** subclass `properties_process.py`. 
 
-4) `main:process_files` can be passed a `collection Filter` parameter. It can be a Process list (processID) to execute for any number of reasons. This makes the App more integrable and adaptable.
+4) `main:process_files` can be passed a `collection Filter` parameter. It can be a Process list (processID) to execute for any number of reasons. This makes the App more integrable and adaptable. filtering list ideas in Python is endless. 
 
 5) All ***Observers*** watch using ***Observer datasets*** attributes : `path`, `recursive`, `interval` for the arrival of new files in `path` values.
 

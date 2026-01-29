@@ -189,7 +189,7 @@ def process_files(process_list=[]):
     app.importLoadID = get_table_id("load")
 
     if app.errorCount > 0:
-        print("Error has already occurred and nothing was done yet!")
+        print("Error: Database Premissions most likely. Check messages in import_error TABLE")
         sys.exit(1) # Exit with error code 1
 
     app.dbConnection.commit()     
@@ -200,7 +200,7 @@ def process_files(process_list=[]):
     allProcesses = config['processes']
 
     # the default filter - if process_list is EMPTY - only processes with status = "Active"
-    # filtering options are endless. watchDog Observers pass List[] of processid to execute in the order to execute.
+    # watchDog Observers attribute property = process_list[processid] is passed to execute.
     log_file = ""
 
     if not process_list:
