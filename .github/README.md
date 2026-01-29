@@ -125,6 +125,8 @@ Run `files_import.py` to ingest all unprocessed files in all configured folders.
 
 Next time `files_import.py` is run only new files since last run will be processed. It knows what files have been imported.
 
+If issues occur check MySQL schema `import_error` TABLE. All messages INSERT unless Database Function Permissions problem.
+
 The GeoIP databases are not included in repository. Links to download GeoLite2 and Geo-IP databases are in Data Enrichments section. Both are easy to download and free.
 ## Visual Interface App
 in my development queue [MySQL2ApacheECharts](https://github.com/willthefarmer/mysql-to-apache-echarts) is a ***visualization tool*** for the database schema. The Web interface consists of [Express](https://github.com/expressjs/express) web application frameworks with [W2UI](https://github.com/vitmalina/w2ui) drill-down data grids for Data Point Details.
