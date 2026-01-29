@@ -36,9 +36,13 @@ Multiple folders and formats can be processed running different Observers with p
 
 The data-driven properties allows flexibility and expandability.
 
-NGINX Stored Procedures are copies of Apache Stored Procedures stripped for Combined `combined` only - `FIND_IN_SET(in_processName, "csv2mysql,vhost,combined") = 0`. I stripped the other format code as a startimng point. From documentation I read NGINX standard is same as Apach combined. I have not not examined NGINX data yet. 
+NGINX Stored Procedures are copies of Apache Stored Procedures stripped for Combined `combined` only - `FIND_IN_SET(in_processName, "csv2mysql,vhost,combined") = 0`. 
 
-The Apache and NGINX stored procedure code sample demonstrates how to incorporate without code modification of current processes. I am straight out on this and other projects but I am committed to this code cleanup until Ground Hog Day.
+I stripped the other format code as starting point. From documentation I read NGINX standard is same as Apache combined. I have not not examined NGINX data yet.
+
+The Apache and NGINX code demonstrates how to incorporate without code modification of current processes.
+
+I am straight out on this and other projects but committed to this code cleanup until Ground Hog Day.
 ### Process properties - Application Processes
 ![Process Properties](./images/process_properties.png)
 
