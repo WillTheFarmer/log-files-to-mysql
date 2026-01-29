@@ -94,7 +94,7 @@ if __name__ == "__main__":
 
             if file_path.exists():
 
-                watch_log =  observer.get("log")
+                watch_log =  observer.get("print")
                 watch_path = observer.get("path")
                 watch_recursive = observer.get("recursive")
                 watch_interval = observer.get("interval")

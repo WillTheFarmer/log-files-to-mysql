@@ -53,7 +53,7 @@ from src.apis.utilities import copy_backup_file
 # mod.load_table - MYSQL staging table
 # mod.log_format - the FIELD substring of the LOAD DATA string
 # mod.log_server - this enables attaching domains and ports to log files of logFormats that do not contain host data.
-# mod.log_serverport - same as above but for the port
+# mod.log_server_port - same as above but for the port
 #
 # days_since_imported - calculated in the importFileID() function. The days since the file was INSERTed into the import_file TABLE
 # 
@@ -86,8 +86,8 @@ def process_file(rawFile):
     if days_since_imported is None:
 
         if app.error_details:
-            #print(f"load_table : {mod.load_table} log_format : {mod.log_format} server_name : {mod.log_server} server_port : {mod.log_serverport} loadFile : {loadFile}")
-            print(f"load_table : {mod.load_table} log_format : {mod.log_format} server_name : {mod.log_server} server_port : {mod.log_serverport} days_since_imported : {days_since_imported}")
+            #print(f"load_table : {mod.load_table} log_format : {mod.log_format} server_name : {mod.log_server} server_port : {mod.log_server_port} loadFile : {loadFile}")
+            print(f"load_table : {mod.load_table} log_format : {mod.log_format} server_name : {mod.log_server} server_port : {mod.log_server_port} days_since_imported : {days_since_imported}")
 
         mod.filesProcessed += 1
 
@@ -119,7 +119,7 @@ def process_file(rawFile):
 
         # build LOAD DATA string - it all depends on log format being setup below - app settings (config.json)
         if app.error_details:
-            print(f"load_table : {mod.load_table} log_format : {mod.log_format} server_name : {mod.log_server} server_port : {mod.log_serverport} loadFile : {loadFile}")
+            print(f"load_table : {mod.load_table} log_format : {mod.log_format} server_name : {mod.log_server} server_port : {mod.log_server_port} loadFile : {loadFile}")
 
         if mod.log_format=="apacheError" or mod.log_format=="nginxError":
           fileLoadSQL_format = f" FIELDS TERMINATED BY ']' ESCAPED BY '\r'"
@@ -142,8 +142,8 @@ def process_file(rawFile):
             fileLoadSQL_importFileID = f" SET importfileid={fileInsertFileID}"
 
             # if the string is set check is server and server port are populated. If YES add the string
-            if mod.log_server and mod.log_serverport:
-                 fileLoadSQL_serverInfo = f", server_name='{mod.log_server}', server_port={mod.log_serverport}"
+            if mod.log_server and mod.log_server_port:
+                 fileLoadSQL_serverInfo = f", server_name='{mod.log_server}', server_port={mod.log_server_port}"
 
             elif mod.log_server:
                  fileLoadSQL_serverInfo = f", server_name='{mod.log_server}'"
@@ -183,9 +183,9 @@ def process(parms):
     mod.load_table = parms.get("load_table")
     mod.log_path = parms.get("path")
     mod.log_recursive = parms.get("recursive")
-    mod.display_log = parms.get("log")
+    mod.display_log = parms.get("print")
     mod.log_server = parms.get("server")
-    mod.log_serverport = parms.get("serverport")
+    mod.log_server_port = parms.get("server_port")
     
     # watchDog observers pass each file as a parameter. 
     # if log_file is passed - call process_file directly.

@@ -39,13 +39,13 @@
 - [2.0.0] add SET importfileid COLUMN to LOAD DATA statement and remove UPDATE importfileid statement in Python. 
 - [2.0.0] add FOREIGN KEYs(importfileid) for load_ TABLES REFERENCES import_file TABLE.
 - [2.0.0] create ErrorLogFormat "[%{u}t] [%-m:%l] [pid %P:tid %T] %7F: %E: [client\ %a] %M% ,\ referer\ %{Referer}i , %v" to add %v-canonical ServerName.
-- [2.0.0] add ServerName & ServerPort on import Combined & Error logs stage tables. Option allow adding domains to logs.
-- [2.0.0] add ERROR_SERVERNAME,ERROR_SERVERPORT,COMBINED_SERVERNAME & COMBINED_SERVERPORT variables to settings.env. 
-- [2.0.0] add SET servername & serverport COLUMN values to LOAD DATA statements.
-- [2.0.0] create log_referer, log_remotehost, log_servername, log_serverport TABLES to associate Access and Error logs.
+- [2.0.0] add ServerName & server_port on import Combined & Error logs stage tables. Option allow adding domains to logs.
+- [2.0.0] add ERROR_SERVERNAME,ERROR_server_port,COMBINED_SERVERNAME & COMBINED_server_port variables to settings.env. 
+- [2.0.0] add SET servername & server_port COLUMN values to LOAD DATA statements.
+- [2.0.0] create log_referer, log_remotehost, log_servername, log_server_port TABLES to associate Access and Error logs.
 - [2.0.0] add server_name & server_port COLUMNS to import_file TABLE. Provides second option to update Apache logs without %v. 
-- [2.0.0] add compound indexes ACCESS_LOG and ERROR_LOG for ServerName and Serverport.
-- [2.0.0] modify process_access_import & process_error_import to populate empty server_name & server_port with ServerName & ServerPort from import_file TABLE. 
+- [2.0.0] add compound indexes ACCESS_LOG and ERROR_LOG for ServerName and server_port.
+- [2.0.0] modify process_access_import & process_error_import to populate empty server_name & server_port with ServerName & server_port from import_file TABLE. 
 - [2.0.0] add WATCH_LOG to setting Log Level in watch4logs.py. 0=no messages, 1=message when files found, 2=message when checking for files & files found
 - [2.0.0] add class bcolors to place RED BACKGROUND on all ERROR - messages
 - [2.0.0] add file - mysql_user_and_grants.sql - MySQL USER and GRANTS file for CREATE USER apache_upload for Python module

@@ -34,7 +34,7 @@ def process(parms):
 
     mod.set_defaults()
 
-    display_log = parms.get("log")
+    display_log = parms.get("print")
     app.cursor = app.dbConnection.cursor()
 
     selectCursor = app.dbConnection.cursor()

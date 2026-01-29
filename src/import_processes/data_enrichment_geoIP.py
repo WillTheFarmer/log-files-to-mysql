@@ -40,7 +40,7 @@ def process(parms):
 
     mod.set_defaults()
 
-    display_log = parms.get("log")
+    display_log = parms.get("print")
     geoip_city = parms.get("city")
     geoip_asn = parms.get("asn")
     

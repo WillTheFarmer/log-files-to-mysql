@@ -24,14 +24,14 @@ class app:
   dbConnection = None
   cursor = None
 
-  # host_name and host_port used for log messages for main.py functions
+  # host_name and host_port used for print messages for main.py functions
   host_name = ''
   host_port = 0
   
   # pymysql_connection_json.py - get_connection default parameters if parameters not passed
   mysql = None
   
-  # used in main:process_files and main:update_importProcess for log messages and UPDATE import_process
+  # used in main:process_files and main:update_importProcess for print messages and UPDATE import_process
   processStart = 0
   processSeconds = 0.0000  
 

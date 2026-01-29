@@ -92,12 +92,12 @@ To use this format place `ErrorLogFormat` before `ErrorLog` in `apache2.conf` to
 |%v|The canonical ServerName of the server serving the request.|
 |%L|Log ID of the request. A %L format string is also available in `mod_log_config` to allow to correlate access log entries with error log lines. If [mod_unique_id](https://httpd.apache.org/docs/current/mod/mod_unique_id.html) is loaded, its unique id will be used as log ID for requests.|
 
-### Three options to associate ServerName & ServerPort to Access & Error logs
-Apache LogFormats - ***common***, ***combined*** and Apache ErrorLogFormat - ***default*** do not contain `%v - canonical ServerName` and `%p - canonical ServerPort`.
+### Three options to associate ServerName & server_port to Access & Error logs
+Apache LogFormats - ***common***, ***combined*** and Apache ErrorLogFormat - ***default*** do not contain `%v - canonical ServerName` and `%p - canonical server_port`.
 
-In order to consolidate logs from multiple domains `%v - canonical ServerName` is required and `%p - canonical ServerPort` is optional.
+In order to consolidate logs from multiple domains `%v - canonical ServerName` is required and `%p - canonical server_port` is optional.
 
-Options to associate ServerName and ServerPort to Access and Error logs are:
+Options to associate ServerName and server_port to Access and Error logs are:
 
 1) Image shows three configurations. Top (A) is default and Bottom (C) will SET  `server_name` and `server_port` COLUMNS of `load_error_default` and `load_access_combined` TABLES during Python `LOAD DATA LOCAL INFILE` execution.
 

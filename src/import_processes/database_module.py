@@ -38,7 +38,7 @@ def process(parms):
 
     mod.set_defaults()
 
-    display_log = parms.get("log")
+    display_log = parms.get("print")
     module_name = parms.get("module_name")
     module_parm1 = parms.get("module_parm1")
     

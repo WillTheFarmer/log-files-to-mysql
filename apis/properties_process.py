@@ -6,7 +6,7 @@ class ProcessProperties:
     filesProcessed = 0
     recordsProcessed = 0
     errorCount = 0
-    # passed from child process to Import Load (main:process_files) as log message - not required - display only 
+    # passed from child process to Import Load (main:process_files) as print message - not required - display only 
     # set to process error message on failure. Import Load (main:process_files) continues to execute next child process.
     # processStatus included in process_list[]. Displayed at end of main:process_files 
     processStatus = None
@@ -44,7 +44,7 @@ class DataFileLoader(ProcessProperties):
     log_recursive = False
     display_log = 1
     log_server = "mydomain.com"
-    log_serverport = 443
+    log_server_port = 443
 
 class DatabaseModule(ProcessProperties):
     """properties used by each process execution of database_module.py"""

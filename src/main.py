@@ -118,7 +118,7 @@ def execute_process(process):
     # used for calcuations and log messaging to main:process_files
     app.executeStart = perf_counter()
 
-    if processParms.get("log") >= 1:
+    if processParms.get("print") >= 1:
         print(f"{color.fg.GREEN}{color.style.NORMAL}Start{color.END} | " \
               f"{process.get("name")} | {datetime.now():%Y-%m-%d %H:%M:%S} | " \
               f"{color.fg.GREEN}{color.style.NORMAL}App execution: {app.executeStart - app.processStart:.4f} seconds.{color.END}")
@@ -155,7 +155,7 @@ def execute_process(process):
             #print(f"Error processing {process.get("name")}: {e}")
             return None
 
-        if processParms.get("log") >= 1:
+        if processParms.get("print") >= 1:
           print(f"{color.fg.GREENI}{color.style.NORMAL}End{color.END} | " \
                 f"{process.get('name')} | {color.fg.GREENI}{color.style.NORMAL}Process ID: {processInfo.get('importProcessID'):.4f} | " \
                 f"{processInfo.get('Files Loaded')} files loaded | time: {processInfo.get('executeSeconds'):.4f} seconds{color.END}")
