@@ -270,10 +270,11 @@ def process_files(process_list=[]):
           f"ImportLoadID: {app.importLoadID} | " \
           f"ClientID: {app.importClientID} | " \
           f"DeviceID: {app.importDeviceID} | " \
-          f"Warnings: {app.warning_count} | " \
-          f"Errors: {app.error_count} | " \
-          f"Host: {app.host_name} | Port: {app.host_port}{color.END} | " \
-          f"{color.fg.YELLOW}{color.style.BRIGHT}Process Metrics data points list{color.END} | " \
+          f"{color.fg.REDI}{color.style.NORMAL}Warnings:{color.END} {app.warning_count} | " \
+          f"{color.fg.REDI}{color.style.NORMAL}Errors:{color.END} {app.error_count}{color.END} | " \
+          f"Host: {color.fg.REDI}{color.style.DIM}{app.host_name}{color.END} | " \
+          f"Port: {color.fg.REDI}{color.style.DIM}{app.host_port}{color.END} | " \
+          f"{color.fg.YELLOW}{color.style.BRIGHT}Process Metrics data points{color.END} | " \
           f"{color.fg.GREEN}{color.style.NORMAL}MySQL messages added {app.message_count}{color.END}")
 
     # Print row
@@ -290,10 +291,10 @@ def process_files(process_list=[]):
           f"ImportLoadID: {app.importLoadID} | " \
           f"ClientID: {app.importClientID} | " \
           f"DeviceID: {app.importDeviceID} | " \
-          f"Warnings: {app.warning_count} | " \
-          f"Errors: {app.error_count} | " \
-          f"Host: {app.host_name} | " \
-          f"Port: {app.host_port}{color.END} | " \
+          f"{color.fg.REDI}{color.style.NORMAL}Warnings:{color.END} {app.warning_count} | " \
+          f"{color.fg.REDI}{color.style.NORMAL}Errors:{color.END} {app.error_count}{color.END} | " \
+          f"Host: {color.fg.REDI}{color.style.DIM}{app.host_name}{color.END} | " \
+          f"Port: {color.fg.REDI}{color.style.DIM}{app.host_port}{color.END} | " \
           f"{color.fg.YELLOW}{color.style.BRIGHT}Completed: {datetime.now():%Y-%m-%d %H:%M:%S} | " \
           f"Execution time: {app.process_seconds:.4f} seconds{color.END}")
     
