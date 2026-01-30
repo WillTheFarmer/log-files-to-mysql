@@ -46,13 +46,14 @@ Multiple folders and formats can be processed running different Observers with p
 
 All processing stages (child processes) are encapsulated within one `main:process_files` (parent process) that captures process metrics, notifications and errors into database import tables.
 
-The data-driven properties allows flexibility and expandability.
+## The data-driven properties allows flexibility and expandability.
 
-#### Every log data record is traceable back to the computer, path, file, load process, parse process and import process the data originates from.
+### Every log data record is traceable back to the computer, path, file, load process, parse process and import process the data originates from.
 
 Multiple access and error logs and formats can be loaded, parsed and imported along with User Agent parsing and IP Address Geolocation retrieval processes within a single `main:process_files` execution. 
 
 `main:process_files` executions (`config.json` file) can be configured to only load logs to Server (single process) leaving other processes to be executed within another `main:process_files` execution (`config.json` file) on a centralized computer.
+
 
 #### Python handles polling of log file folders and executing database LOAD DATA, Procedures, Functions and SQL Statements.
 
