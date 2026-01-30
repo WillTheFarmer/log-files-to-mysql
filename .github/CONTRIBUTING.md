@@ -2,9 +2,7 @@ Until Ground Hog Day I am full-time on Python Code cleanup and NGINX formats.
 
 Anyone with NGINX log files who wants to contribute NGINX log format knowledge or import data results would be helpful and welcomed.
 
-Anyone with MySQL procedural and NGINX log format knowledge would be helpful.
-
-[mysql-schema-http-logs](https://github.com/willthefarmer/mysql-schema-http-logs) repository
+More info about MySQL database and procedural code at [mysql-schema-http-logs](https://github.com/willthefarmer/mysql-schema-http-logs).
 
 If you find this code useful please contribute a :star: to the repository.
 

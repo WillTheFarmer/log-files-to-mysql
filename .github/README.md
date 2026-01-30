@@ -2,11 +2,18 @@
 ![Entity Relationship Diagram](./images/import_load_summary.png)
 `main:process_files` Import Load Summary from ingesting log files included in repository.
 
+### Application runs on Windows, Linux & MacOS - Database runs on MySQL & MariaDB
 ***JSON data-driven*** App & MySQL schema to automate importing access & error files, normalizing log data into database and generating a well-documented data lineage audit trail 24/7.
 
 ## Application Collections and Factory Method
 
 `config.json` has ***Processes*** and ***Observers*** configured to share the seven (7) log format folders in repository `/data/` folder.
+
+### Process properties - Application Processes
+![Process Properties](./images/process_properties.png)
+
+### Observer properties - Application watchdog Observers
+![Observers Properties](./images/observer_properties.png)
 
 1) Some ***Processes*** load files from folders into staging LOAD TABLES `data_file_loader.py`, some execute MySQL stored procedures `database_module.py` and some processes perform Data Enhancements - `data_enrichment_geoip.py` and `data_enrichment_useragent.py`.
 
@@ -28,61 +35,30 @@ If no parameter is passed `main:process_files` executes `config.json` Processes 
 
 5) All ***Observers*** watch using ***Observer datasets*** : `path`, `recursive`, `interval` for the arrival of new files in `path` values.
 
-Each Observer dataset also has `process_list` property. The `process_list` holds a Python List of `[processid]`. It is a subset of `id` property from `config.json` Processes collection. 
+Each Observer dataset also has `process_list` property. The `process_list` holds a Python List of `[processid]`. It is a subset of `id` property from `config.json` Processes collection.
 
-The `process_list` property and watchdog `event.src_path` property are passed to `main:process_files` which overrides configured Process executions.
+ List of Observers Watching:
+![Observers Watching](./images/observers_running.png)
+
+The `process_list` property and watchdog `event.src_path` property are passed to `main:process_files` which will override configured Process executions.
 
 Multiple folders and formats can be processed running different Observers with properties for different log formats and paths.
 
-The data-driven properties allows flexibility and expandability.
-
-The Apache and NGINX code demonstrates how to incorporate without code modification of current processes.
-
-Thoroughly researched and tested all Apache log formats. I have not done that for NGINX.
-
-I read NGINX documentation and online sources which suggests Apache format combined.  
-
-***Repository NGINX log files are standard access and error formats from new NGINX server*** 
-
-NGINX log files are in `/data/nginx_combined/` and `/data/nginx_error/`
-
-MySQL procedural files are copies of Apache code. Then stripped to code required to process `combined` format. 
-
-`parse_access_nginx.sql` started as copy of `parse_access_apache.sql`
-
-`import_access_nginx.sql` started as copy of `import_access_apache.sql`
-
-`parse_error_nginx.sql` started as copy of `parse_error_apache.sql`
-
-`import_error_nginx.sql` started as copy of `import_error_apache.sql`
-
-Python naming convention fixes are done or close. `config.json` file structure changes are done.
-
-### Process properties - Application Processes
-![Process Properties](./images/process_properties.png)
-
-### Observer properties - Application watchdog Observers
-![Observers Properties](./images/observer_properties.png)
-
 All processing stages (child processes) are encapsulated within one `main:process_files` (parent process) that captures process metrics, notifications and errors into database import tables.
 
-### Import Message Table - 2 Python records and 1 MySQL record
-![Message Table](./images/import_message_table.png)
+The data-driven properties allows flexibility and expandability.
 
-Every log data record is traceable back to the computer, path, file, load process, parse process and import process the data originates from.
-
-Python handles polling of log file folders and executing database LOAD DATA, Procedures, Functions and SQL Statements. List of Observers Watching:
-
-![Observers Watching](./images/observers_running.png)
-
-Python drives the application but MySQL or MariaDB does all Data Manipulation & Processing. 
+#### Every log data record is traceable back to the computer, path, file, load process, parse process and import process the data originates from.
 
 Multiple access and error logs and formats can be loaded, parsed and imported along with User Agent parsing and IP Address Geolocation retrieval processes within a single `main:process_files` execution. 
 
 `main:process_files` executions (`config.json` file) can be configured to only load logs to Server (single process) leaving other processes to be executed within another `main:process_files` execution (`config.json` file) on a centralized computer.
-### Application runs on Windows, Linux & MacOS - Database runs on MySQL & MariaDB
-![Entity Relationship Diagram](./images/entity_relationship_diagram.png)
+
+#### Python handles polling of log file folders and executing database LOAD DATA, Procedures, Functions and SQL Statements.
+
 ## Database designed for HTTP log data analysis
+![Entity Relationship Diagram](./images/entity_relationship_diagram.png)
+
 Application determines what files have been processed using `import_file` TABLE. 
 Each imported file has record with name, path, size, created, modified attributes inserted during `main:process_files`.
 
@@ -112,8 +88,39 @@ Single quotes around 'PyMySQL[rsa]' package required on macOS.
 |[geoip2](https://pypi.org/project/geoip2/)|python -m pip install geoip2|[maxmind/GeoIP2-python](https://github.com/maxmind/GeoIP2-python)|
 |[tabulate](https://pypi.org/project/tabulate/)|python -m pip install tabulate|[astanin/python-tabulate](https://github.com/astanin/python-tabulate)|
 
+## NGINX log formats and NGINX data testing
+Apache log formats have been thoroughly researched and tested. NGINX log formats have not. This weekend my focus is NGINX data.
+
+***Repository NGINX files are standard access and error formats from new NGINX server*** 
+
+NGINX log files in `/data/nginx_combined/` and `/data/nginx_error/` are from new NGINX server.
+
+NGINX Stored Procedures are copies of Apache Stored Procedures and then stripped code down to process `combined` format only.
+
+`parse_access_nginx.sql` started as copy of `parse_access_apache.sql`
+
+`import_access_nginx.sql` started as copy of `import_access_apache.sql`
+
+`parse_error_nginx.sql` started as copy of `parse_error_apache.sql`
+
+`import_error_nginx.sql` started as copy of `import_error_apache.sql`
+
+The Apache and NGINX code demonstrates how to incorporate without code modification of current processes.
+
 ## Installation Instructions
 Steps make installation quick and straightforward. Application will be ready to import HTTP logs on completion.
+
+### Import Message Table - the first place to look when in doubt about anything
+
+During installation and execution the Python App writes all messages, warnings and errors to the MySQL schema import_message TABLE. 
+
+Screenshot shows 3 records inserted running repository without downloading GeoIP database first. 
+
+The 2 Python records are about missing databases. The 1 MySQL record is about NGINX data problem.
+
+The `module_name`, `importloadid` and `importprocessid` columns tells where message originated.
+
+![Message Table](./images/import_message_table.png)
 
 ### 1. Python
 Install all required packages (`requirements.txt` in repository):
