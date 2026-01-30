@@ -5,7 +5,7 @@
 ### Application runs on Windows, Linux & MacOS - Database runs on MySQL & MariaDB
 ***JSON data-driven*** App & MySQL schema to automate importing access & error files, normalizing log data into database and generating a well-documented data lineage audit trail 24/7.
 
-## Application Collections and Factory Method
+## Two Collections and Factory Method
 
 `config.json` has ***Processes*** and ***Observers*** configured to share the seven (7) log format folders in repository `/data/` folder.
 
@@ -27,6 +27,8 @@ To process different log format files in different directories the `config.json`
 
 Many `config.json` Process datasets contain `database_module.py` and `data_file_loader.py` for ***module_name*** property. These 2 modules are often reused with different `attributes` property values.
 
+### The data-driven properties allows flexibility and expandability
+
 3) All ***Process Modules*** have `process` method and ***ProcessProperties*** subclass `properties_process.py`. 
 
 4) `main:process_files` can be passed a ***collection filter*** parameter. It can be a Process list (processID) to execute for any number of reasons. This makes the App more integrable and adaptable.
@@ -37,7 +39,7 @@ If no parameter is passed `main:process_files` executes `config.json` Processes 
 
 Each Observer dataset also has `process_list` property. The `process_list` holds a Python List of `[processid]`. It is a subset of `id` property from `config.json` Processes collection.
 
- List of Observers Watching:
+List of Observers Watching:
 ![Observers Watching](./images/observers_running.png)
 
 The `process_list` property and watchdog `event.src_path` property are passed to `main:process_files` which will override configured Process executions.
@@ -46,16 +48,13 @@ Multiple folders and formats can be processed running different Observers with p
 
 All processing stages (child processes) are encapsulated within one `main:process_files` (parent process) that captures process metrics, notifications and errors into database import tables.
 
-## The data-driven properties allows flexibility and expandability.
-
-### Every log data record is traceable back to the computer, path, file, load process, parse process and import process the data originates from.
+### Every log data record is traceable back to the computer, path, file, load process, parse process and import process the data originated.
 
 Multiple access and error logs and formats can be loaded, parsed and imported along with User Agent parsing and IP Address Geolocation retrieval processes within a single `main:process_files` execution. 
 
 `main:process_files` executions (`config.json` file) can be configured to only load logs to Server (single process) leaving other processes to be executed within another `main:process_files` execution (`config.json` file) on a centralized computer.
 
-
-#### Python handles polling of log file folders and executing database LOAD DATA, Procedures, Functions and SQL Statements.
+### Python handles polling of log file folders and executing database LOAD DATA, Procedures, Functions and SQL Statements.
 
 ## Database designed for HTTP log data analysis
 ![Entity Relationship Diagram](./images/entity_relationship_diagram.png)
@@ -111,9 +110,11 @@ The Apache and NGINX code demonstrates how to incorporate without code modificat
 ## Installation Instructions
 Steps make installation quick and straightforward. Application will be ready to import HTTP logs on completion.
 
-### Import Message Table - the first place to look when in doubt about anything
+### Import Message Table - first place to look when in doubt about anything
 
-During installation and execution the Python App writes all messages, warnings and errors to the MySQL schema import_message TABLE. 
+This table is helpful information when learning the App. The message data is raw and will be refined in future.
+
+During installation and execution Python App & MySQL writes all messages, warnings and errors to MySQL schema `import_message` TABLE. 
 
 Screenshot shows 3 records inserted running repository without downloading GeoIP database first. 
 
