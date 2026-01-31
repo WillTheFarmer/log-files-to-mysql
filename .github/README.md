@@ -102,7 +102,7 @@ NGINX log files in `/data/nginx_combined/` and `/data/nginx_error/` are from new
 
 Apache log formats have been thoroughly researched and tested. 
 
-### NGINX MySQL procedural code
+### NGINX MySQL procedural code - not tested yet
 
 NGINX Stored Procedures are copies of Apache Stored Procedures and then stripped code down to process `combined` format only.
 

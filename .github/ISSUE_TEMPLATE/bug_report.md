@@ -9,9 +9,9 @@ assignees: ''
 
 **Describe the bug:**
 
-What records are in apache_logs.import_error TABLE?
+Check import_message TABLE.
 
-**A clear and concise description of what part of application:**
+**description of what part of application:**
 
 What import process is the problem in?
 
@@ -21,10 +21,10 @@ Is the problem in Python or MySQL:
 3. What Store Procedure?
 
 **Expected behavior:**
-A clear and concise description of what you expected to happen.
+description of what you expected to happen.
 
 **Screenshots:**
-If applicable, add screenshots to help explain your problem.
+add screenshots to explain problem.
 
 **Client Computer:**
  - OS: [e.g. iOS]
@@ -35,4 +35,4 @@ If applicable, add screenshots to help explain your problem.
  - Version [e.g. 22]
 
 **Additional context:**
-Add any other context about the problem here.
+Add other context about problem here.

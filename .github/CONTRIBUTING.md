@@ -1,4 +1,4 @@
-Until Ground Hog Day I am full-time on Python Code cleanup and NGINX formats.
+Until the day after Groundhog Day happens I am full-time on Python Code cleanup and NGINX formats.
 
 Anyone with NGINX log files who wants to contribute NGINX log format knowledge or import data results would be helpful and welcomed.
 
