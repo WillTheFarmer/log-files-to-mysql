@@ -63,12 +63,12 @@ def process(parms):
     if not path.exists(geoip_city_file):
         geoip_city_file_exists = False
         mod.warning_count += 1
-        add_message( 6, f"GeoIP City database {geoip_city_file} not found", "Missing GeoIP")
+        add_message( 6, f"GeoIP City database {geoip_city_file} not found", __name__ )
 
     if not path.exists(geoip_asn_file):
         geoip_asn_file_exists = False
         mod.warning_count += 1
-        add_message( 7, f"GeoIP ASN database {geoip_city_file} not found", "Missing GeoIP")
+        add_message( 7, f"GeoIP ASN database {geoip_city_file} not found", __name__ )
 
     if geoip_city_file_exists and geoip_asn_file_exists:
 
