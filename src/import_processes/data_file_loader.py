@@ -127,7 +127,7 @@ def process_file(rawFile):
         elif mod.log_format=="apacheCommon" or mod.log_format=="apacheCombined" or mod.log_format=="apacheVhost" or mod.log_format=="nginxCombined":
             fileLoadSQL_format = " FIELDS TERMINATED BY ' ' OPTIONALLY ENCLOSED BY '\"' ESCAPED BY '\r'"
 
-        elif mod.log_format=="apacheCsv":
+        elif mod.log_format=="apacheCsv2mysql":
             fileLoadSQL_format = " FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' ESCAPED BY '\r'"
 
         else:

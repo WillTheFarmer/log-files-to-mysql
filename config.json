@@ -56,7 +56,7 @@
       "process_list": ["apacheVhostLoad"]
     },
     {
-      "id": "apacheCsv",
+      "id": "apacheCsv2mysql",
       "name": "Apache CSV2MySQL",
       "description": "Apache CSV2MySQL format",
       "status": "Active",
@@ -64,7 +64,7 @@
       "path": "data/apache_csv/",
       "recursive": false,
       "interval": 15,
-      "process_list": ["apacheCsvLoad","apacheCsvParse","apacheCsvImport"]
+      "process_list": ["apacheCsv2mysqlLoad","apacheCsv2mysqlParse","apacheCsv2mysqlImport"]
     },
     {
       "id": "nginxError",
@@ -117,7 +117,7 @@
       "attributes": {
         "print": 2,
         "module_name": "parse_error_apache",
-        "module_parm1": "default"
+        "module_parm1": "python"
       }
     },
     {
@@ -130,7 +130,7 @@
       "attributes": {
         "print": 2,
         "module_name": "import_error_apache",
-        "module_parm1": "default"
+        "module_parm1": "python"
       }
     },
     {
@@ -159,8 +159,8 @@
       "status": "Active",
       "attributes": {
         "print": 2,
-        "module_name": "parse_access_apache",
-        "module_parm1": "combined"
+        "module_name": "parse_access_apache_combined",
+        "module_parm1": "python"
       }
     },
     {
@@ -172,8 +172,8 @@
       "status": "Active",
       "attributes": {
         "print": 2,
-        "module_name": "import_access_apache",
-        "module_parm1": "combined"
+        "module_name": "import_access_apache_combined",
+        "module_parm1": "python"
       }
     },
     {
@@ -202,8 +202,8 @@
       "status": "Active",
       "attributes": {
         "print": 2,
-        "module_name": "parse_access_apache",
-        "module_parm1": "combined"
+        "module_name": "parse_access_apache_combined",
+        "module_parm1": "python"
       }
     },
     {
@@ -215,8 +215,8 @@
       "status": "Active",
       "attributes": {
         "print": 2,
-        "module_name": "import_access_apache",
-        "module_parm1": "combined"
+        "module_name": "import_access_apache_combined",
+        "module_parm1": "python"
       }
     },
     {
@@ -245,8 +245,8 @@
       "status": "InActive",
       "attributes": {
         "print": 2,
-        "module_name": "parse_access_apache",
-        "module_parm1": "Vhost"
+        "module_name": "parse_access_apache_vhost",
+        "module_parm1": "python"
       }
     },
     {
@@ -258,12 +258,12 @@
       "status": "InActive",
       "attributes": {
         "print": 2,
-        "module_name": "import_access_apache",
-        "module_parm1": "Vhost"
+        "module_name": "import_access_apache_vhost",
+        "module_parm1": "python"
       }
     },
     {
-      "id": "apacheCsvLoad",
+      "id": "apacheCsv2mysqlLoad",
       "name": "Apache Access CSV Load",
       "description": "Access Comma Separated Values format files loading.",
       "module_name": "data_file_loader",
@@ -271,7 +271,7 @@
       "status": "Active",
       "attributes": {
         "print": 2,
-        "log_format": "apacheCsv",
+        "log_format": "apacheCsv2mysql",
         "load_table": "load_access_csv",
         "path": "data/apache_csv/**/*access*.*",
         "recursive": true,
@@ -280,29 +280,29 @@
       }
     },
     {
-      "id": "apacheCsvParse",
-      "name": "Apache Csv2 Parse",
-      "description": "Access Csv logs being parsed database.",
+      "id": "apacheCsv2mysqlParse",
+      "name": "Apache Csv22mysql Parse",
+      "description": "Access Csv2mysql logs being parsed database.",
       "module_name": "database_module",
-      "group": "Apache Csv",
+      "group": "Apache Csv2mysql",
       "status": "Active",
       "attributes": {
         "print": 2,
-        "module_name": "parse_access_apache",
-        "module_parm1": "csv2mysql"
+        "module_name": "parse_access_apache_csv2mysql",
+        "module_parm1": "python"
       }
     },
     {
-      "id": "apacheCsvImport",
-      "name": "Apache Csv Import",
-      "description": "Access Csv logs being imported database.",
+      "id": "apacheCsv2mysqlImport",
+      "name": "Apache Csv2mysql Import",
+      "description": "Access Csv2mysql logs being imported database.",
       "module_name": "database_module",
-      "group": "Apache Csv",
+      "group": "Apache Csv2mysql",
       "status": "Active",
       "attributes": {
         "print": 2,
-        "module_name": "import_access_apache",
-        "module_parm1": "csv2mysql"
+        "module_name": "import_access_apache_csv2mysql",
+        "module_parm1": "python"
       }
     },
     {
@@ -332,7 +332,7 @@
       "attributes": {
         "print": 2,
         "module_name": "parse_error_nginx",
-        "module_parm1": "nginx"
+        "module_parm1": "python"
       }
     },
     {
@@ -345,7 +345,7 @@
       "attributes": {
         "print": 2,
         "module_name": "import_error_nginx",
-        "module_parm1": "nginx"
+        "module_parm1": "python"
       }
     },
     {
@@ -374,8 +374,8 @@
       "status": "Active",
       "attributes": {
         "print": 2,
-        "module_name": "parse_access_nginx",
-        "module_parm1": "combined"
+        "module_name": "parse_access_nginx_combined",
+        "module_parm1": "python"
       }
     },
     {
@@ -387,8 +387,8 @@
       "status": "Active",
       "attributes": {
         "print": 2,
-        "module_name": "import_access_nginx",
-        "module_parm1": "combined"
+        "module_name": "import_access_nginx_combined",
+        "module_parm1": "python"
       }
     },
     {
