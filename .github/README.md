@@ -108,3 +108,13 @@ The Apache and NGINX code demonstrates how to incorporate without code modificat
 
 ## Visual Interface App
 in my development queue [MySQL2ApacheECharts](https://github.com/willthefarmer/mysql-to-apache-echarts) is a ***visualization tool*** for the database schema. The Web interface consists of [Express](https://github.com/expressjs/express) web application frameworks with [W2UI](https://github.com/vitmalina/w2ui) drill-down data grids for Data Point Details.
+
+## Other Documents
+
+[Installation Instructions](INSTALL.md)
+
+[Apache Format Information](APACHE_FORMATS.md)
+
+[Support Information](SUPPORT.md)
+
+[Change Log](CHANGELOG.md)

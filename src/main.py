@@ -15,13 +15,13 @@
 # function: process_files()
 # module: import_processes.py
 # function: get_import_process()
-# module: datFileLoader.py
+# module: data_file_loader.py
 # function: process()
-# module: databaseModule.py
+# module: database_module.py
 # function: process()
-# module: dataEnrichment_geoIP.py
+# module: data_enrichment_geoIP.py
 # function: process()
-# module: dataEnrichment_userAgent.py
+# module: data_enrichment_userAgent.py
 # function: process()
 # synopsis: main:process_files (import_load table) executes child processes (import_process table) & watchdog observers defined in config.json.
 # author: Will Raymond <farmfreshsoftware@gmail.com>
@@ -94,7 +94,7 @@ if config:
     app.mysql = config.get("mysql")
 
     # Two options for shared database connection to help install issues
-    # and separate connction data from JSON app process settings.  
+    # and separate connection data from JSON app process settings.  
     # Option 1 - pymysql_env.py uses .env file for connection settings 
     #from src.database.pymysql_env import get_connection
     # Option 2 - pymysql_json.py uses config.json file for connection settings
@@ -115,7 +115,7 @@ def execute_process(process):
 
     processInfo = {}
 
-    # used for calcuations and log messaging to main:process_files
+    # used for calculations and log messaging to main:process_files
     app.executeStart = perf_counter()
 
     if processParms.get("print") >= 1:
@@ -124,13 +124,13 @@ def execute_process(process):
               f"{color.fg.GREEN}{color.style.NORMAL}App execution: {app.executeStart - app.process_start:.4f} seconds.{color.END}")
 
     try:
-        # gererate new primary ID for import_process table
-        # each Import Load Child process gets ID. Stored Procudures UPDATE record totals with ID.
+        # generate new primary ID for import_process table
+        # each Import Load Child process gets ID. Stored Procedures UPDATE record totals with ID.
         app.importProcessID = get_table_id("process")
 
         # Use the factory to get the appropriate loader
         importProcess = get_import_process(module_name)
-        #gererate new primary ID for import_process table
+        #generate new primary ID for import_process table
 
         try:
             # import process does work are all modules return the same data list []
@@ -174,7 +174,7 @@ def process_files(process_list=[]):
     # display console message log header
     print (f"{color.fg.YELLOW}{color.style.BRIGHT}ProcessLogs start: {datetime.now():%Y-%m-%d %H:%M:%S} | Host: {app.host_name} | Port: {app.host_port}{color.END}") 
 
-    # reset application-level calcualtion properties
+    # reset application-level calculations properties
     app.message_count = 0
     app.warning_count = 0
     app.error_count = 0

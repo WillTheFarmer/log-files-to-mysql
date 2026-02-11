@@ -121,13 +121,35 @@ def process_file(rawFile):
         if app.error_details:
             print(f"load_table : {mod.load_table} log_format : {mod.log_format} server_name : {mod.log_server} server_port : {mod.log_server_port} loadFile : {loadFile}")
 
-        if mod.log_format=="apacheError" or mod.log_format=="nginxError":
+        if mod.log_format=="apache_error":
           fileLoadSQL_format = f" FIELDS TERMINATED BY ']' ESCAPED BY '\r'"
 
-        elif mod.log_format=="apacheCommon" or mod.log_format=="apacheCombined" or mod.log_format=="apacheVhost" or mod.log_format=="nginxCombined":
-            fileLoadSQL_format = " FIELDS TERMINATED BY ' ' OPTIONALLY ENCLOSED BY '\"' ESCAPED BY '\r'"
+        elif mod.log_format=="nginx_error":
+          fileLoadSQL_format = f" FIELDS TERMINATED BY ']' ESCAPED BY '\\\\'" # Standard NGINX JSON/CSV escaping
 
-        elif mod.log_format=="apacheCsv2mysql":
+        elif mod.log_format=="apache_common" or mod.log_format=="apache_combined" or mod.log_format=="apacheVhost":
+            fileLoadSQL_format = (
+                f"FIELDS TERMINATED BY ' ' "  # Crucial for User-Agents/Referers
+                f"OPTIONALLY ENCLOSED BY '\"' "
+                f"ESCAPED BY '\r'"
+            )
+
+        elif mod.log_format=="nginx_combined":
+            fileLoadSQL_format = (
+                f"FIELDS TERMINATED BY ' ' " 
+                f"OPTIONALLY ENCLOSED BY '\"' " # Crucial for User-Agents/Referers
+                f"ESCAPED BY '\\\\'"            # Standard NGINX JSON/CSV escaping
+            )
+
+        # For the new NGINX CSV format
+        elif mod.log_format=="nginx_csv2mysql":
+            fileLoadSQL_format = (
+                f"FIELDS TERMINATED BY ',' " 
+                f"OPTIONALLY ENCLOSED BY '\"' " # Crucial for User-Agents/Referers
+                f"ESCAPED BY '\\\\'"            # Standard NGINX JSON/CSV escaping
+            )
+
+        elif mod.log_format=="apache_csv2mysql":
             fileLoadSQL_format = " FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' ESCAPED BY '\r'"
 
         else:

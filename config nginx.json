@@ -1,0 +1,22 @@
+{
+  "log_formats": {
+    "nginx_csv2mysql": {
+      "name": "nginx_csv2mysql",
+      "type": "csv",
+      "delimiter": ",",
+      "quote_char": "\"",
+      "escape_char": "\\",
+      "columns": [
+        "host", "server_port", "remote_addr", "ident", "remote_user",
+        "time_local", "request_length", "bytes_sent", "upstream_addr",
+        "body_bytes_sent", "request_time_ms", "request_time_us", "upstream_response_time",
+        "status", "server_protocol", "request_method", "uri", "args",
+        "http_referer", "http_user_agent", "cookie_varname", "request_id"
+      ],
+      "post_processing": {
+        "request_time_ms": "val * 1000",
+        "request_time_us": "val * 1000000"
+      }
+    }
+  }
+}

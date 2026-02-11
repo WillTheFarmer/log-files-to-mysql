@@ -17,32 +17,43 @@
       "description": "Apache Error format",
       "status": "Active",
       "print": 2,
-      "path": "/Users/farmf/Documents/apacheLogs/2026_apache/",
+      "path": "data/apache_error/",
       "recursive": false,
       "interval": 15,
       "process_list": ["apacheErrorLoad","apacheErrorParse","apacheErrorImport"]
     },
     {
-      "id": "apache_error",
-      "name": "Apache Error Standard",
-      "description": "Apache Error format",
+      "id": "apache_common",
+      "name": "Apache Common",
+      "description": "Apache Common format - LOAD ONLY",
       "status": "Active",
       "print": 2,
-      "path": "/Users/farmf/Documents/apacheLogs/2026_apache/",
+      "path": "data/apache_common/",
       "recursive": false,
-      "interval": 15,
-      "process_list": ["apacheErrorLoad","apacheErrorParse","apacheErrorImport"]
+      "interval": 25,
+      "process_list": ["apacheCombinedLoad"]
     },
     {
-      "id": "apache_error",
-      "name": "Apache Error Standard",
-      "description": "Apache Error format",
+      "id": "apache_combined",
+      "name": "Apache Combined",
+      "description": "Apache Combined format - No Import process",
       "status": "Active",
       "print": 2,
-      "path": "/Users/farmf/Documents/apacheLogs/2026_apache/",
+      "path": "data/apache_combined/",
+      "recursive": false,
+      "interval": 25,
+      "process_list": ["apacheCombinedLoad","apacheCombinedParse"]
+    },
+    {
+      "id": "apacheVhost",
+      "name": "Apache Vhost",
+      "description": "Apache Vhost format - LOAD ONLY",
+      "status": "Active",
+      "print": 2,
+      "path": "data/apache_vhost/",
       "recursive": false,
       "interval": 15,
-      "process_list": ["apacheErrorLoad","apacheErrorParse","apacheErrorImport"]
+      "process_list": ["apacheVhostLoad"]
     },
     {
       "id": "apache_csv2mysql",
@@ -50,7 +61,7 @@
       "description": "Apache CSV2MySQL format",
       "status": "Active",
       "print": 2,
-      "path": "/Users/farmf/Documents/apacheLogs/2026_apache/",
+      "path": "data/apache_csv/",
       "recursive": false,
       "interval": 15,
       "process_list": ["apacheCsv2mysqlLoad","apacheCsv2mysqlParse","apacheCsv2mysqlImport"]
@@ -61,7 +72,7 @@
       "description": "Apache Error format",
       "status": "Active",
       "print": 2,
-      "path": "/Users/farmf/Documents/apacheLogs/2026_nginx/",
+      "path": "data/nginx_error/",
       "recursive": false,
       "interval": 15,
       "process_list": ["nginxErrorLoad","nginxErrorParse","nginxErrorImport"]
@@ -72,7 +83,7 @@
       "description": "Apache Combined format",
       "status": "Active",
       "print": 2,
-      "path": "/Users/farmf/Documents/apacheLogs/2026_nginx/",
+      "path": "data/nginx_combined/",
       "recursive": false,
       "interval": 15,
       "process_list": ["nginxCombinedLoad","nginxCombinedParse","nginxCombinedImport"]
@@ -82,32 +93,15 @@
     {
       "id": "apacheErrorLoad",
       "name": "Apache Error Load",
-      "description": "Error apacheLogs/2026_apache loading.",
+      "description": "Error Standard log files loading.",
       "module_name": "data_file_loader",
       "group": "Apache Error",
       "status": "Active",
       "attributes": {
         "print": 2,
         "log_format": "apache_error",
-        "load_table": "load_error_apache_default",
-        "path": "/Users/farmf/Documents/apacheLogs/2026_apache/**/*error*.*",
-        "recursive": true,
-        "server": "mydomain.com",
-        "server_port": 443
-      }
-    },
-    {
-      "id": "apacheErrorLoad",
-      "name": "Apache Error Load",
-      "description": "Error apacheLogs/error_logs files loading.",
-      "module_name": "data_file_loader",
-      "group": "Apache Error",
-      "status": "Active",
-      "attributes": {
-        "print": 2,
-        "log_format": "apache_error",
-        "load_table": "load_error_apache_default",
-        "path": "/Users/farmf/Documents/apacheLogs/error_logs/**/*error*.*",
+        "load_table": "load_error_apache",
+        "path": "data/apache_error/**/*error*.*",
         "recursive": true,
         "server": "mydomain.com",
         "server_port": 443
@@ -140,34 +134,146 @@
       }
     },
     {
-      "id": "apacheCsv2mysqlLoad",
-      "name": "Apache Access CSV Load",
-      "description": "Access CSV format apacheLogs/2026_apache files loading.",
+      "id": "apacheCommonLoad",
+      "name": "Apache Common Load",
+      "description": "Access Common log format.",
       "module_name": "data_file_loader",
-      "group": "Apache Csv",
+      "group": "Apache Common",
       "status": "Active",
       "attributes": {
         "print": 2,
-        "log_format": "apache_csv2mysql",
-        "load_table": "load_access_apache_csv2mysql",
-        "path": "/Users/farmf/Documents/apacheLogs/2026_apache/**/*access*.*",
+        "log_format": "apache_common",
+        "load_table": "load_access_combined",
+        "path": "data/apache_common/**/*access*.*",
         "recursive": true,
         "server": "mydomain.com",
         "server_port": 443
       }
     },
     {
+      "id": "apacheCommonParse",
+      "name": "Apache Common Parse",
+      "description": "Apache Common being parsed database.",
+      "module_name": "database_module",
+      "group": "Apache Common",
+      "status": "Active",
+      "attributes": {
+        "print": 2,
+        "module_name": "parse_access_apache_combined",
+        "module_parm1": "python"
+      }
+    },
+    {
+      "id": "apacheCommonImport",
+      "name": "Apache Common Import",
+      "description": "Apache Common being imported database.",
+      "module_name": "database_module",
+      "group": "Apache Common",
+      "status": "Active",
+      "attributes": {
+        "print": 2,
+        "module_name": "import_access_apache_combined",
+        "module_parm1": "python"
+      }
+    },
+    {
+      "id": "apacheCombinedLoad",
+      "name": "Apache Combined Load",
+      "description": "Access Combined format files loading.",
+      "module_name": "data_file_loader",
+      "group": "Apache Combined",
+      "status": "Active",
+      "attributes": {
+        "print": 2,
+        "log_format": "apache_combined",
+        "load_table": "load_access_combined",
+        "path": "data/apache_combined/**/*access*.*",
+        "recursive": true,
+        "server": "mydomain.com",
+        "server_port": 443
+      }
+    },
+    {
+      "id": "apacheCombinedParse",
+      "name": "Apache Combined Parse",
+      "description": "Access Combined logs being parsed database.",
+      "module_name": "database_module",
+      "group": "Apache Combined",
+      "status": "Active",
+      "attributes": {
+        "print": 2,
+        "module_name": "parse_access_apache_combined",
+        "module_parm1": "python"
+      }
+    },
+    {
+      "id": "apacheCombinedImport",
+      "name": "Apache Combined Import",
+      "description": "Access Combined logs being imported database.",
+      "module_name": "database_module",
+      "group": "Apache Combined",
+      "status": "Active",
+      "attributes": {
+        "print": 2,
+        "module_name": "import_access_apache_combined",
+        "module_parm1": "python"
+      }
+    },
+    {
+      "id": "apacheVhostLoad",
+      "name": "Apache Vhost Load",
+      "description": "Access Vhost log format files loading.",
+      "module_name": "data_file_loader",
+      "group": "Apache Vhost",
+      "status": "InActive",
+      "attributes": {
+        "print": 2,
+        "log_format": "apacheVhost",
+        "load_table": "load_access_vhost",
+        "path": "data/apache_vhost/**/*access*.*",
+        "recursive": true,
+        "server": "mydomain.com",
+        "server_port": 443
+      }
+    },
+    {
+      "id": "apacheVhostParse",
+      "name": "Apache Vhost Parse",
+      "description": "Access Vhost logs being parsed database.",
+      "module_name": "database_module",
+      "group": "Apache Vhost",
+      "status": "InActive",
+      "attributes": {
+        "print": 2,
+        "module_name": "parse_access_apache_vhost",
+        "module_parm1": "python"
+      }
+    },
+    {
+      "id": "apacheVhostImport",
+      "name": "Apache Vhost Import",
+      "description": "Access Vhost logs being imported database.",
+      "module_name": "database_module",
+      "group": "Apache Vhost",
+      "status": "InActive",
+      "attributes": {
+        "print": 2,
+        "module_name": "import_access_apache_vhost",
+        "module_parm1": "python"
+      }
+    },
+    {
       "id": "apacheCsv2mysqlLoad",
       "name": "Apache Access CSV Load",
-      "description": "Access CSV format /apacheLogs/csv2mysql files loading.",
+      "description": "Access Comma Separated Values format files loading.",
       "module_name": "data_file_loader",
       "group": "Apache Csv",
       "status": "Active",
       "attributes": {
         "print": 2,
         "log_format": "apache_csv2mysql",
-        "load_table": "load_access_apache_csv2mysql",
-        "path": "/Users/farmf/Documents/apacheLogs/csv2mysql/**/*access*.*",
+        "load_table": "load_access_csv",
+        "path": "data/apache_csv/**/*access*.*",
         "recursive": true,
         "server": "mydomain.com",
         "server_port": 443
@@ -209,8 +315,8 @@
       "attributes": {
         "print": 2,
         "log_format": "nginx_error",
-        "load_table": "load_error_nginx_default",
-        "path": "/Users/farmf/Documents/apacheLogs/2026_nginx/**/*error*.*",
+        "load_table": "load_error_nginx",
+        "path": "data/nginx_error/**/*error*.*",
         "recursive": true,
         "server": "mydomain.com",
         "server_port": 443
@@ -243,45 +349,45 @@
       }
     },
     {
-      "id": "nginxDefaultLoad",
-      "name": "NGINX Access Default Load",
+      "id": "nginxCombinedLoad",
+      "name": "NGINX Combined Load",
       "description": "NGINX Access Combined format files loading.",
       "module_name": "data_file_loader",
-      "group": "Nginx Default",
+      "group": "Nginx Combined",
       "status": "Active",
       "attributes": {
         "print": 2,
-        "log_format": "nginx_default",
-        "load_table": "load_access_nginx_default",
-        "path": "/Users/farmf/Documents/apacheLogs/2026_nginx/**/*access*.*",
+        "log_format": "nginx_combined",
+        "load_table": "load_access_nginx",
+        "path": "data/nginx_combined/**/*access*.*",
         "recursive": true,
         "server": "mydomain.com",
         "server_port": 443
       }
     },
     {
-      "id": "nginxDefaultParse",
-      "name": "NGINX Default Parse",
+      "id": "nginxCombinedParse",
+      "name": "NGINX Combined Parse",
       "description": "NGINX Access Combined being parsed database.",
       "module_name": "database_module",
-      "group": "Nginx Default",
+      "group": "Nginx Combined",
       "status": "Active",
       "attributes": {
         "print": 2,
-        "module_name": "parse_access_nginx_default",
+        "module_name": "parse_access_nginx_combined",
         "module_parm1": "python"
       }
     },
     {
-      "id": "nginxDefaultImport",
-      "name": "NGINX Default Import",
+      "id": "nginxCombinedImport",
+      "name": "NGINX Combined Import",
       "description": "NGINX Access Combined being imported database.",
       "module_name": "database_module",
-      "group": "Nginx Default",
+      "group": "Nginx Combined",
       "status": "Active",
       "attributes": {
         "print": 2,
-        "module_name": "import_access_nginx_default",
+        "module_name": "import_access_nginx_combined",
         "module_parm1": "python"
       }
     },

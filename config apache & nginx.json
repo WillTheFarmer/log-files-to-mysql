@@ -23,28 +23,6 @@
       "process_list": ["apacheErrorLoad","apacheErrorParse","apacheErrorImport"]
     },
     {
-      "id": "apache_error",
-      "name": "Apache Error Standard",
-      "description": "Apache Error format",
-      "status": "Active",
-      "print": 2,
-      "path": "/Users/farmf/Documents/apacheLogs/2026_apache/",
-      "recursive": false,
-      "interval": 15,
-      "process_list": ["apacheErrorLoad","apacheErrorParse","apacheErrorImport"]
-    },
-    {
-      "id": "apache_error",
-      "name": "Apache Error Standard",
-      "description": "Apache Error format",
-      "status": "Active",
-      "print": 2,
-      "path": "/Users/farmf/Documents/apacheLogs/2026_apache/",
-      "recursive": false,
-      "interval": 15,
-      "process_list": ["apacheErrorLoad","apacheErrorParse","apacheErrorImport"]
-    },
-    {
       "id": "apache_csv2mysql",
       "name": "Apache CSV2MySQL",
       "description": "Apache CSV2MySQL format",
@@ -82,32 +60,15 @@
     {
       "id": "apacheErrorLoad",
       "name": "Apache Error Load",
-      "description": "Error apacheLogs/2026_apache loading.",
+      "description": "Error Standard log files loading.",
       "module_name": "data_file_loader",
       "group": "Apache Error",
       "status": "Active",
       "attributes": {
         "print": 2,
         "log_format": "apache_error",
-        "load_table": "load_error_apache_default",
+        "load_table": "load_error_apache",
         "path": "/Users/farmf/Documents/apacheLogs/2026_apache/**/*error*.*",
-        "recursive": true,
-        "server": "mydomain.com",
-        "server_port": 443
-      }
-    },
-    {
-      "id": "apacheErrorLoad",
-      "name": "Apache Error Load",
-      "description": "Error apacheLogs/error_logs files loading.",
-      "module_name": "data_file_loader",
-      "group": "Apache Error",
-      "status": "Active",
-      "attributes": {
-        "print": 2,
-        "log_format": "apache_error",
-        "load_table": "load_error_apache_default",
-        "path": "/Users/farmf/Documents/apacheLogs/error_logs/**/*error*.*",
         "recursive": true,
         "server": "mydomain.com",
         "server_port": 443
@@ -142,32 +103,15 @@
     {
       "id": "apacheCsv2mysqlLoad",
       "name": "Apache Access CSV Load",
-      "description": "Access CSV format apacheLogs/2026_apache files loading.",
+      "description": "Access Comma Separated Values format files loading.",
       "module_name": "data_file_loader",
       "group": "Apache Csv",
       "status": "Active",
       "attributes": {
         "print": 2,
         "log_format": "apache_csv2mysql",
-        "load_table": "load_access_apache_csv2mysql",
+        "load_table": "load_access_csv",
         "path": "/Users/farmf/Documents/apacheLogs/2026_apache/**/*access*.*",
-        "recursive": true,
-        "server": "mydomain.com",
-        "server_port": 443
-      }
-    },
-    {
-      "id": "apacheCsv2mysqlLoad",
-      "name": "Apache Access CSV Load",
-      "description": "Access CSV format /apacheLogs/csv2mysql files loading.",
-      "module_name": "data_file_loader",
-      "group": "Apache Csv",
-      "status": "Active",
-      "attributes": {
-        "print": 2,
-        "log_format": "apache_csv2mysql",
-        "load_table": "load_access_apache_csv2mysql",
-        "path": "/Users/farmf/Documents/apacheLogs/csv2mysql/**/*access*.*",
         "recursive": true,
         "server": "mydomain.com",
         "server_port": 443
@@ -209,7 +153,7 @@
       "attributes": {
         "print": 2,
         "log_format": "nginx_error",
-        "load_table": "load_error_nginx_default",
+        "load_table": "load_error_nginx",
         "path": "/Users/farmf/Documents/apacheLogs/2026_nginx/**/*error*.*",
         "recursive": true,
         "server": "mydomain.com",
@@ -243,16 +187,16 @@
       }
     },
     {
-      "id": "nginxDefaultLoad",
-      "name": "NGINX Access Default Load",
+      "id": "nginxCombinedLoad",
+      "name": "NGINX Combined Load",
       "description": "NGINX Access Combined format files loading.",
       "module_name": "data_file_loader",
-      "group": "Nginx Default",
+      "group": "Nginx Combined",
       "status": "Active",
       "attributes": {
         "print": 2,
-        "log_format": "nginx_default",
-        "load_table": "load_access_nginx_default",
+        "log_format": "nginx_combined",
+        "load_table": "load_access_nginx",
         "path": "/Users/farmf/Documents/apacheLogs/2026_nginx/**/*access*.*",
         "recursive": true,
         "server": "mydomain.com",
@@ -260,28 +204,28 @@
       }
     },
     {
-      "id": "nginxDefaultParse",
-      "name": "NGINX Default Parse",
+      "id": "nginxCombinedParse",
+      "name": "NGINX Combined Parse",
       "description": "NGINX Access Combined being parsed database.",
       "module_name": "database_module",
-      "group": "Nginx Default",
+      "group": "Nginx Combined",
       "status": "Active",
       "attributes": {
         "print": 2,
-        "module_name": "parse_access_nginx_default",
+        "module_name": "parse_access_nginx_combined",
         "module_parm1": "python"
       }
     },
     {
-      "id": "nginxDefaultImport",
-      "name": "NGINX Default Import",
+      "id": "nginxCombinedImport",
+      "name": "NGINX Combined Import",
       "description": "NGINX Access Combined being imported database.",
       "module_name": "database_module",
-      "group": "Nginx Default",
+      "group": "Nginx Combined",
       "status": "Active",
       "attributes": {
         "print": 2,
-        "module_name": "import_access_nginx_default",
+        "module_name": "import_access_nginx_combined",
         "module_parm1": "python"
       }
     },
