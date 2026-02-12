@@ -11,56 +11,12 @@
     "path": "data/backup_files/"
   },
   "observers": [
-    {
-      "id": "apache_error",
-      "name": "Apache Error Standard",
-      "description": "Apache Error format",
-      "status": "Active",
-      "print": 2,
-      "path": "/Users/farmf/Documents/apacheLogs/2026_apache/",
-      "recursive": false,
-      "interval": 15,
-      "process_list": ["apacheErrorLoad","apacheErrorParse","apacheErrorImport"]
-    },
-    {
-      "id": "apache_csv2mysql",
-      "name": "Apache CSV2MySQL",
-      "description": "Apache CSV2MySQL format",
-      "status": "Active",
-      "print": 2,
-      "path": "/Users/farmf/Documents/apacheLogs/2026_apache/",
-      "recursive": false,
-      "interval": 15,
-      "process_list": ["apacheCsv2mysqlLoad","apacheCsv2mysqlParse","apacheCsv2mysqlImport"]
-    },
-    {
-      "id": "nginx_error",
-      "name": "NGINX Error Format",
-      "description": "Apache Error format",
-      "status": "Active",
-      "print": 2,
-      "path": "/Users/farmf/Documents/apacheLogs/2026_nginx/",
-      "recursive": false,
-      "interval": 15,
-      "process_list": ["nginxErrorLoad","nginxErrorParse","nginxErrorImport"]
-    },
-    {
-      "id": "nginx_combined",
-      "name": "NGINX Access Format",
-      "description": "Apache Combined format",
-      "status": "Active",
-      "print": 2,
-      "path": "/Users/farmf/Documents/apacheLogs/2026_nginx/",
-      "recursive": false,
-      "interval": 15,
-      "process_list": ["nginxCombinedLoad","nginxCombinedParse","nginxCombinedImport"]
-    }
   ],
   "processes": [
     {
       "id": "apacheErrorLoad",
       "name": "Apache Error Load",
-      "description": "Error Standard log files loading.",
+      "description": "Sucks up all error files for 2026",
       "module_name": "data_file_loader",
       "group": "Apache Error",
       "status": "Active",
@@ -77,7 +33,7 @@
     {
       "id": "apacheErrorParse",
       "name": "Apache Error Parse",
-      "description": "Apache Error being parsed database.",
+      "description": "Apache Error parse process at database",
       "module_name": "database_module",
       "group": "Apache Error",
       "status": "Active",
@@ -90,7 +46,7 @@
     {
       "id": "apacheErrorImport",
       "name": "Apache Error Import",
-      "description": "Apache Error being imported database.",
+      "description": "Apache Error import process at database",
       "module_name": "database_module",
       "group": "Apache Error",
       "status": "Active",
@@ -103,9 +59,9 @@
     {
       "id": "apacheCsv2mysqlLoad",
       "name": "Apache Access CSV Load",
-      "description": "Access Comma Separated Values format files loading.",
+      "description": "Sucks up all access files CSV format for 2026",
       "module_name": "data_file_loader",
-      "group": "Apache Csv",
+      "group": "Apache Csv2mysql",
       "status": "Active",
       "attributes": {
         "print": 2,
@@ -120,7 +76,7 @@
     {
       "id": "apacheCsv2mysqlParse",
       "name": "Apache Csv22mysql Parse",
-      "description": "Access Csv2mysql logs being parsed database.",
+      "description": "Access Csv2mysql logs parse process at database",
       "module_name": "database_module",
       "group": "Apache Csv2mysql",
       "status": "Active",
@@ -133,7 +89,7 @@
     {
       "id": "apacheCsv2mysqlImport",
       "name": "Apache Csv2mysql Import",
-      "description": "Access Csv2mysql logs being imported database.",
+      "description": "Access Csv2mysql logs import process at database",
       "module_name": "database_module",
       "group": "Apache Csv2mysql",
       "status": "Active",
@@ -146,7 +102,7 @@
     {
       "id": "nginxErrorLoad",
       "name": "NGINX Error Load",
-      "description": "NGINX Standard Error format files loading.",
+      "description": "Sucks up all NGINX error files for 2026",
       "module_name": "data_file_loader",
       "group": "Nginx Error",
       "status": "Active",
@@ -187,15 +143,15 @@
       }
     },
     {
-      "id": "nginxCombinedLoad",
-      "name": "NGINX Combined Load",
-      "description": "NGINX Access Combined format files loading.",
+      "id": "nginxDefaultLoad",
+      "name": "NGINX Default Load",
+      "description": "Sucks up all NGINX access files Default format for 2026",
       "module_name": "data_file_loader",
-      "group": "Nginx Combined",
+      "group": "Nginx",
       "status": "Active",
       "attributes": {
         "print": 2,
-        "log_format": "nginx_combined",
+        "log_format": "nginx_default",
         "load_table": "load_access_nginx",
         "path": "/Users/farmf/Documents/apacheLogs/2026_nginx/**/*access*.*",
         "recursive": true,
@@ -204,35 +160,35 @@
       }
     },
     {
-      "id": "nginxCombinedParse",
-      "name": "NGINX Combined Parse",
-      "description": "NGINX Access Combined being parsed database.",
+      "id": "nginxDefaultParse",
+      "name": "NGINX Default Parse",
+      "description": "NGINX Access Default being parsed at database",
       "module_name": "database_module",
-      "group": "Nginx Combined",
+      "group": "Nginx",
       "status": "Active",
       "attributes": {
         "print": 2,
-        "module_name": "parse_access_nginx_combined",
+        "module_name": "parse_access_nginx_default",
         "module_parm1": "python"
       }
     },
     {
-      "id": "nginxCombinedImport",
-      "name": "NGINX Combined Import",
-      "description": "NGINX Access Combined being imported database.",
+      "id": "nginxDefaultImport",
+      "name": "NGINX Default Import",
+      "description": "NGINX Access Default being imported at database",
       "module_name": "database_module",
-      "group": "Nginx Combined",
+      "group": "Nginx Default",
       "status": "Active",
       "attributes": {
         "print": 2,
-        "module_name": "import_access_nginx_combined",
+        "module_name": "import_access_nginx_default",
         "module_parm1": "python"
       }
     },
     {
       "id": "useragentEnrichment",
       "name": "User Agent Parsing",
-      "description": "Slices and Dices your string.",
+      "description": "Slices and Dices your string process at Client",
       "module_name": "data_enrichment_userAgent",
       "group": "DataEnhance",
       "status": "Active",
@@ -243,7 +199,7 @@
     {
       "id": "useragentImport",
       "name": "User Agent Normalization",
-      "description": "Normalizing User Agent data Start.",
+      "description": "Normalizing User Agent data process at database",
       "module_name": "database_module",
       "group": "DataEnhance",
       "status": "Active",
@@ -256,7 +212,7 @@
     {
       "id": "geoipEnrichment",
       "name": "IP Address Data Extraction",
-      "description": "Geolocation information related to IP",
+      "description": "Geolocation information related to IP process at Client",
       "module_name": "data_enrichment_geoIP",
       "group": "DataEnhance",
       "status": "Active",
@@ -269,7 +225,7 @@
     {
       "id": "geoipImport",
       "name": "IP Address Normalizing",
-      "description": "Normalizing IP Address data.",
+      "description": "Normalizing IP Address data process at database",
       "module_name": "database_module",
       "group": "DataEnhance",
       "status": "Active",

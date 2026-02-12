@@ -4749,12 +4749,12 @@ BEGIN
   END IF;
 END//
 DELIMITER ;
--- # Start of file: import_error_apache.sql ---
+-- # Start of file: import_error_apache_default.sql ---
 -- drop procedure -----------------------------------------------------------
-DROP PROCEDURE IF EXISTS `import_error_apache`;
+DROP PROCEDURE IF EXISTS `import_error_apache_default`;
 -- create procedure ---------------------------------------------------------
 DELIMITER //
-CREATE DEFINER = `root`@`localhost` PROCEDURE `import_error_apache`
+CREATE DEFINER = `root`@`localhost` PROCEDURE `import_error_apache_default`
 (
   IN in_processName VARCHAR(100),
   IN in_importLoadID VARCHAR(20)
@@ -4762,7 +4762,7 @@ CREATE DEFINER = `root`@`localhost` PROCEDURE `import_error_apache`
 BEGIN
   -- module_name = moduleName column in import_process - to id procedure is being run
   -- in_processName = processName column in import_process - to id procedure OPTION is being run
-  DECLARE module_name VARCHAR(255) DEFAULT 'import_error_apache';
+  DECLARE module_name VARCHAR(255) DEFAULT 'import_error_apache_default';
   -- standard variables for processes
   DECLARE e1 INT UNSIGNED;
   DECLARE e2, e3 VARCHAR(128);
@@ -5131,12 +5131,12 @@ INNER JOIN import_file f
   END IF;
 END//
 DELIMITER ;
--- # Start of file: import_error_nginx.sql ---
+-- # Start of file: import_error_nginx_default.sql ---
 -- drop procedure -----------------------------------------------------------
-DROP PROCEDURE IF EXISTS `import_error_nginx`;
+DROP PROCEDURE IF EXISTS `import_error_nginx_default`;
 -- create procedure ---------------------------------------------------------
 DELIMITER //
-CREATE DEFINER = `root`@`localhost` PROCEDURE `import_error_nginx`
+CREATE DEFINER = `root`@`localhost` PROCEDURE `import_error_nginx_default`
 (
   IN in_processName VARCHAR(100),
   IN in_importLoadID VARCHAR(20)
@@ -5144,7 +5144,7 @@ CREATE DEFINER = `root`@`localhost` PROCEDURE `import_error_nginx`
 BEGIN
   -- module_name = moduleName column in import_process - to id procedure is being run
   -- in_processName = processName column in import_process - to id procedure OPTION is being run
-  DECLARE module_name VARCHAR(255) DEFAULT 'import_error_nginx';
+  DECLARE module_name VARCHAR(255) DEFAULT 'import_error_nginx_default';
   -- standard variables for processes
   DECLARE e1 INT UNSIGNED;
   DECLARE e2, e3 VARCHAR(128);
@@ -6813,12 +6813,12 @@ BEGIN
   END IF;
 END//
 DELIMITER ;
--- # Start of file: parse_error_apache.sql ---
+-- # Start of file: parse_error_apache_default.sql ---
 -- drop procedure -----------------------------------------------------------
-DROP PROCEDURE IF EXISTS `parse_error_apache`;
+DROP PROCEDURE IF EXISTS `parse_error_apache_default`;
 -- create procedure ---------------------------------------------------------
 DELIMITER //
-CREATE DEFINER = `root`@`localhost` PROCEDURE `parse_error_apache`
+CREATE DEFINER = `root`@`localhost` PROCEDURE `parse_error_apache_default`
 (
   IN in_processName VARCHAR(100),
   IN in_importLoadID VARCHAR(20)
@@ -6826,7 +6826,7 @@ CREATE DEFINER = `root`@`localhost` PROCEDURE `parse_error_apache`
 BEGIN
   -- module_name = moduleName column in import_process - to id procedure is being run
   -- in_processName = processName column in import_process - to id procedure OPTION is being run
-  DECLARE module_name VARCHAR(255) DEFAULT 'parse_error_apache';
+  DECLARE module_name VARCHAR(255) DEFAULT 'parse_error_apache_default';
   -- standard variables for processes
   DECLARE e1 INT UNSIGNED;
   DECLARE e2, e3 VARCHAR(128);
@@ -7187,12 +7187,12 @@ INNER JOIN import_load il
   END IF;
 END//
 DELIMITER ;
--- # Start of file: parse_error_nginx.sql ---
+-- # Start of file: parse_error_nginx_default.sql ---
 -- drop procedure -----------------------------------------------------------
-DROP PROCEDURE IF EXISTS `parse_error_nginx`;
+DROP PROCEDURE IF EXISTS `parse_error_nginx_default`;
 -- create procedure ---------------------------------------------------------
 DELIMITER //
-CREATE DEFINER = `root`@`localhost` PROCEDURE `parse_error_nginx`
+CREATE DEFINER = `root`@`localhost` PROCEDURE `parse_error_nginx_default`
 (
   IN in_processName VARCHAR(100),
   IN in_importLoadID VARCHAR(20)
@@ -7200,7 +7200,7 @@ CREATE DEFINER = `root`@`localhost` PROCEDURE `parse_error_nginx`
 BEGIN
   -- module_name = moduleName column in import_process - to id procedure is being run
   -- in_processName = processName column in import_process - to id procedure OPTION is being run
-  DECLARE module_name VARCHAR(255) DEFAULT 'parse_error_nginx';
+  DECLARE module_name VARCHAR(255) DEFAULT 'parse_error_nginx_default';
   -- standard variables for processes
   DECLARE e1 INT UNSIGNED;
   DECLARE e2, e3 VARCHAR(128);
@@ -58242,6 +58242,1800 @@ VIEW `access_ua_os_version_list` AS
          ON `l`.`useragentid` = `lua`.`id`
    GROUP BY `ln`.`id`
    ORDER BY `ln`.`name`;
+-- # Start of file: access_clientcity_list.sql ---
+DROP VIEW IF EXISTS `access_clientcity_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_clientcity_list` AS
+     SELECT `ln`.`city` AS `Access Client City`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `log_client` `ln`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`clientid` = `ln`.`id`
+   GROUP BY `ln`.`city`
+   ORDER BY `ln`.`city`;
+-- # Start of file: access_clientcountry_code_list.sql ---
+DROP VIEW IF EXISTS `access_clientcountry_code_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_clientcountry_code_list` AS
+     SELECT `ln`.`country_code` AS `Access Client Country Code`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `log_client` `ln`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`clientid` = `ln`.`id`
+   GROUP BY `ln`.`country_code`
+   ORDER BY `ln`.`country_code`;
+-- # Start of file: access_clientcountry_list.sql ---
+DROP VIEW IF EXISTS `access_clientcountry_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_clientcountry_list` AS
+     SELECT `ln`.`country` AS `Access Client Country`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `log_client` `ln`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`clientid` = `ln`.`id`
+   GROUP BY `ln`.`country`
+   ORDER BY `ln`.`country`;
+-- # Start of file: access_clientnetwork_list.sql ---
+DROP VIEW IF EXISTS `access_clientnetwork_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_clientnetwork_list` AS
+     SELECT `ln`.`network` AS `Access Client Network`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `log_client` `ln`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`clientid` = `ln`.`id`
+   GROUP BY `ln`.`network`
+   ORDER BY `ln`.`network`;
+-- # Start of file: access_clientorganization_list.sql ---
+DROP VIEW IF EXISTS `access_clientorganization_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_clientorganization_list` AS
+     SELECT `ln`.`organization` AS `Access Client Organization`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `log_client` `ln`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`clientid` = `ln`.`id`
+   GROUP BY `ln`.`organization`
+   ORDER BY `ln`.`organization`;
+-- # Start of file: access_clientsubdivision_list.sql ---
+DROP VIEW IF EXISTS `access_clientsubdivision_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_clientsubdivision_list` AS
+     SELECT `ln`.`subdivision` AS `Access Client Subdivision`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `log_client` `ln`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`clientid` = `ln`.`id`
+   GROUP BY `ln`.`subdivision`
+   ORDER BY `ln`.`subdivision`;
+-- # Start of file: access_client_city_list.sql ---
+DROP VIEW IF EXISTS `access_client_city_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_client_city_list` AS
+     SELECT `ca`.`name` AS `Access Client City`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `log_client_city` `ca`
+ INNER JOIN `log_client` `c` 
+         ON `c`.`cityid` = `ca`.`id`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`clientid` = `c`.`id`
+   GROUP BY `ca`.`name`
+   ORDER BY `ca`.`name`;
+-- # Start of file: access_client_country_code_list.sql ---
+DROP VIEW IF EXISTS `access_client_country_code_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_client_country_code_list` AS
+     SELECT `ca`.`country_code` AS `Access Client Country Code`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `log_client_country` `ca`
+ INNER JOIN `log_client` `c` 
+         ON `c`.`countryid` = `ca`.`id`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`clientid` = `c`.`id`
+   GROUP BY `ca`.`country_code`
+   ORDER BY `ca`.`country_code`;
+-- # Start of file: access_client_country_list.sql ---
+DROP VIEW IF EXISTS `access_client_country_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_client_country_list` AS
+     SELECT `ca`.`country` AS `Access Client Country`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `log_client_country` `ca`
+ INNER JOIN `log_client` `c` 
+         ON `c`.`countryid` = `ca`.`id`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`clientid` = `c`.`id`
+   GROUP BY `ca`.`country`
+   ORDER BY `ca`.`country`;
+-- # Start of file: access_client_list.sql ---
+DROP VIEW IF EXISTS `access_client_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_client_list` AS
+     SELECT `ln`.`name` AS `Access Client Name`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `log_client` `ln`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`clientid` = `ln`.`id`
+   GROUP BY `ln`.`name`
+   ORDER BY `ln`.`name`;
+-- # Start of file: access_client_network_list.sql ---
+DROP VIEW IF EXISTS `access_client_network_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_client_network_list` AS
+     SELECT `ca`.`name` AS `Access Client Network`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `log_client_network` `ca`
+ INNER JOIN `log_client` `c` 
+         ON `c`.`networkid` = `ca`.`id`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`clientid` = `c`.`id`
+   GROUP BY `ca`.`name`
+   ORDER BY `ca`.`name`;
+-- # Start of file: access_client_organization_list.sql ---
+DROP VIEW IF EXISTS `access_client_organization_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_client_organization_list` AS
+     SELECT `ca`.`name` AS `Access Client Organization`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `log_client_organization` `ca`
+ INNER JOIN `log_client` `c` 
+         ON `c`.`organizationid` = `ca`.`id`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`clientid` = `c`.`id`
+   GROUP BY `ca`.`name`
+   ORDER BY `ca`.`name`;
+-- # Start of file: access_client_subdivision_list.sql ---
+DROP VIEW IF EXISTS `access_client_subdivision_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_client_subdivision_list` AS
+     SELECT `ca`.`name` AS `Access Client Subdivision`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `log_client_subdivision` `ca`
+ INNER JOIN `log_client` `c` 
+         ON `c`.`subdivisionid` = `ca`.`id`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`clientid` = `c`.`id`
+   GROUP BY `ca`.`name`
+   ORDER BY `ca`.`name`;
+-- # Start of file: access_cookie_list.sql ---
+DROP VIEW IF EXISTS `access_cookie_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_cookie_list` AS
+     SELECT `ln`.`name` AS `Access Log Cookie`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `access_log_cookie` `ln`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`cookieid` = `ln`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: access_period_day_list.sql ---
+DROP VIEW IF EXISTS `access_period_day_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_period_day_list` AS
+     SELECT YEAR(l.logged) 'Year',
+            MONTH(l.logged) 'Month',
+            DAY(l.logged) 'Day',
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM access_log l
+   GROUP BY YEAR(l.logged),
+            MONTH(l.logged),
+            DAY(l.logged)
+   ORDER BY 'Year',
+            'Month',
+            'Day'; 
+-- # Start of file: access_period_hour_list.sql ---
+DROP VIEW IF EXISTS `access_period_hour_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_period_hour_list` AS
+     SELECT YEAR(l.logged) 'Year',
+            MONTH(l.logged) 'Month',
+            DAY(l.logged) 'Day',
+            HOUR(l.logged) 'Hour',
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM access_log l
+   GROUP BY YEAR(l.logged),
+            MONTH(l.logged),
+            DAY(l.logged),
+            HOUR(l.logged)
+   ORDER BY 'Year',
+            'Month',
+            'Day',
+            'Hour';
+   -- # Start of file: access_period_month_list.sql ---
+DROP VIEW IF EXISTS `access_period_month_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_period_month_list` AS
+     SELECT YEAR(l.logged) 'Year',
+            MONTH(l.logged) 'Month',
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM access_log l
+   GROUP BY YEAR(l.logged),
+            MONTH(l.logged)
+   ORDER BY 'Year',
+            'Month'; 
+-- # Start of file: access_period_week_list.sql ---
+DROP VIEW IF EXISTS `access_period_week_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_period_week_list` AS
+     SELECT YEAR(l.logged) 'Year',
+            MONTH(l.logged) 'Month',
+            WEEK(l.logged) 'Week',
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM access_log l
+   GROUP BY YEAR(l.logged),
+            MONTH(l.logged),
+            WEEK(l.logged)
+   ORDER BY 'Year',
+            'Month',
+            'Week'; 
+-- # Start of file: access_period_year_list.sql ---
+DROP VIEW IF EXISTS `access_period_year_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_period_year_list` AS
+     SELECT YEAR(l.logged) 'Year',
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM access_log l
+   GROUP BY YEAR(l.logged)
+   ORDER BY 'Year'; 
+-- # Start of file: access_referer_list.sql ---
+DROP VIEW IF EXISTS `access_referer_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_referer_list` AS
+     SELECT `ln`.`name` AS `Access Log Referer`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `log_referer` `ln`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`refererid` = `ln`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: access_remotelogname_list.sql ---
+DROP VIEW IF EXISTS `access_remotelogname_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_remotelogname_list` AS
+     SELECT `ln`.`name` AS `Access Log Remote Log Name`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `access_log_remotelogname` `ln`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`remotelognameid` = `ln`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: access_remoteuser_list.sql ---
+DROP VIEW IF EXISTS `access_remoteuser_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_remoteuser_list` AS
+     SELECT `ln`.`name` AS `Access Log Remote User`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `access_log_remoteuser` `ln`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`remoteuserid` = `ln`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: access_reqmethod_list.sql ---
+DROP VIEW IF EXISTS `access_reqmethod_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_reqmethod_list` AS
+     SELECT `ln`.`name` AS `Access Log Method`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `access_log_reqmethod` `ln`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`reqmethodid` = `ln`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+
+-- # Start of file: access_reqprotocol_list.sql ---
+DROP VIEW IF EXISTS `access_reqprotocol_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_reqprotocol_list` AS
+     SELECT `ln`.`name` AS `Access Log Protocol`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `access_log_reqprotocol` `ln`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`reqstatusid` = `ln`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: access_reqquery_list.sql ---
+DROP VIEW IF EXISTS `access_reqquery_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_reqquery_list` AS
+     SELECT `ln`.`name` AS `Access Log Query String`, 
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `access_log_reqquery` `ln`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`reqqueryid` = `ln`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: access_reqstatus_list.sql ---
+DROP VIEW IF EXISTS `access_reqstatus_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_reqstatus_list` AS
+     SELECT `ln`.`name` AS `Access Log Status`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `access_log_reqstatus` `ln`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`reqstatusid` = `ln`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: access_requri_list.sql ---
+DROP VIEW IF EXISTS `access_requri_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_requri_list` AS
+     SELECT `ln`.`name` AS `Access Log URI`, 
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `access_log_requri` `ln`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`requriid` = `ln`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: access_serverport_list.sql ---
+DROP VIEW IF EXISTS `access_serverport_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_serverport_list` AS
+     SELECT `ln`.`name` AS `Access Log Server Port`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `log_serverport` `ln`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`serverportid` = `ln`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: access_server_list.sql ---
+DROP VIEW IF EXISTS `access_server_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_server_list` AS
+     SELECT `ln`.`name` AS `Access Log Server Name`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `log_server` `ln`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`serverid` = `ln`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: access_server_serverport_list.sql ---
+DROP VIEW IF EXISTS `access_server_serverport_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_server_serverport_list` AS
+     SELECT `sn`.`name` AS `Access Log Server Name`,
+            `sp`.`name` AS `Server Port`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `access_log` `l`
+ INNER JOIN `log_server` `sn`
+         ON `sn`.`id` = `l`.`serverid`
+ INNER JOIN `log_serverport` `sp`
+         ON `sp`.`id` = `l`.`serverportid`
+   GROUP BY `l`.`serverid`,
+            `l`.`serverportid`
+   ORDER BY `sn`.`name`,
+	          `sp`.`name`;
+-- # Start of file: access_ua_browser_family_list.sql ---
+DROP VIEW IF EXISTS `access_ua_browser_family_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_ua_browser_family_list` AS
+     SELECT `ln`.`name` AS `Browser Family`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `access_log_ua_browser_family` `ln`
+ INNER JOIN `access_log_useragent` `lua` 
+         ON `lua`.`uabrowserfamilyid` = `ln`.`id`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`useragentid` = `lua`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: access_ua_browser_list.sql ---
+DROP VIEW IF EXISTS `access_ua_browser_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_ua_browser_list` AS
+    SELECT `ln`.`name` AS `Browser`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `access_log_ua_browser` `ln`
+ INNER JOIN `access_log_useragent` `lua` 
+         ON `lua`.`uabrowserid` = `ln`.`id`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`useragentid` = `lua`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: access_ua_browser_version_list.sql ---
+DROP VIEW IF EXISTS `access_ua_browser_version_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_ua_browser_version_list` AS
+    SELECT `ln`.`name` AS `Browser Version`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `access_log_ua_browser_version` `ln`
+ INNER JOIN `access_log_useragent` `lua` 
+         ON `lua`.`uabrowserversionid` = `ln`.`id`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`useragentid` = `lua`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: access_ua_device_brand_list.sql ---
+DROP VIEW IF EXISTS `access_ua_device_brand_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_ua_device_brand_list` AS
+    SELECT `ln`.`name` AS `Device Brand`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `access_log_ua_device_brand` `ln`
+ INNER JOIN `access_log_useragent` `lua` 
+         ON `lua`.`uadevicebrandid` = `ln`.`id`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`useragentid` = `lua`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: access_ua_device_family_list.sql ---
+DROP VIEW IF EXISTS `access_ua_device_family_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_ua_device_family_list` AS
+    SELECT `ln`.`name` AS `Device Family`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `access_log_ua_device_family` `ln`
+ INNER JOIN `access_log_useragent` `lua` 
+         ON `lua`.`uadevicefamilyid` = `ln`.`id`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`useragentid` = `lua`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: access_ua_device_list.sql ---
+DROP VIEW IF EXISTS `access_ua_device_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_ua_device_list` AS
+    SELECT `ln`.`name` AS `Device`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `access_log_ua_device` `ln`
+ INNER JOIN `access_log_useragent` `lua` 
+         ON `lua`.`uadeviceid` = `ln`.`id`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`useragentid` = `lua`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: access_ua_device_model_list.sql ---
+DROP VIEW IF EXISTS `access_ua_device_model_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_ua_device_model_list` AS
+     SELECT `ln`.`name` AS `Device Model`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `access_log_ua_device_model` `ln`
+ INNER JOIN `access_log_useragent` `lua` 
+         ON `lua`.`uadevicefamilyid` = `ln`.`id`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`useragentid` = `lua`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: access_ua_list.sql ---
+DROP VIEW IF EXISTS `access_ua_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_ua_list` AS
+     SELECT `ln`.`name` AS `Access Log User Agent`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `access_log_ua` `ln`
+ INNER JOIN `access_log_useragent` `lua` 
+         ON `lua`.`uaid` = `ln`.`id`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`useragentid` = `lua`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: access_ua_os_family_list.sql ---
+DROP VIEW IF EXISTS `access_ua_os_family_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_ua_os_family_list` AS
+     SELECT `ln`.`name` AS `Operating System Family`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `access_log_ua_os_family` `ln`
+ INNER JOIN `access_log_useragent` `lua` 
+         ON `lua`.`uaosfamilyid` = `ln`.`id`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`useragentid` = `lua`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: access_ua_os_list.sql ---
+DROP VIEW IF EXISTS `access_ua_os_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_ua_os_list` AS
+    SELECT `ln`.`name` AS `Operating System`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `access_log_ua_os` `ln`
+ INNER JOIN `access_log_useragent` `lua` 
+         ON `lua`.`uaosid` = `ln`.`id`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`useragentid` = `lua`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: access_ua_os_version_list.sql ---
+DROP VIEW IF EXISTS `access_ua_os_version_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_ua_os_version_list` AS
+     SELECT `ln`.`name` AS `Operating System Version`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `access_log_ua_os_version` `ln`
+ INNER JOIN `access_log_useragent` `lua` 
+         ON `lua`.`uaosversionid` = `ln`.`id`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`useragentid` = `lua`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: access_useragent_browser_family_list.sql ---
+DROP VIEW IF EXISTS `access_useragent_browser_family_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_useragent_browser_family_list` AS
+     SELECT `ln`.`ua_browser_family` AS `Browser Family`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `access_log_useragent` `ln`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`useragentid` = `ln`.`id`
+   GROUP BY `ln`.`ua_browser_family`
+   ORDER BY `ln`.`ua_browser_family`;
+-- # Start of file: access_useragent_browser_list.sql ---
+DROP VIEW IF EXISTS `access_useragent_browser_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_useragent_browser_list` AS
+     SELECT `ln`.`ua_browser` AS `Browser`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `access_log_useragent` `ln`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`useragentid` = `ln`.`id`
+   GROUP BY `ln`.`ua_browser`
+   ORDER BY `ln`.`ua_browser`;
+-- # Start of file: access_useragent_browser_version_list.sql ---
+DROP VIEW IF EXISTS `access_useragent_browser_version_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_useragent_browser_version_list` AS
+     SELECT `ln`.`ua_browser_version` AS `Browser Version`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `access_log_useragent` `ln`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`useragentid` = `ln`.`id`
+   GROUP BY `ln`.`ua_browser_version`
+   ORDER BY `ln`.`ua_browser_version`;
+-- # Start of file: access_useragent_device_brand_list.sql ---
+DROP VIEW IF EXISTS `access_useragent_device_brand_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_useragent_device_brand_list` AS
+     SELECT `ln`.`ua_device_brand` AS `Device Brand`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `access_log_useragent` `ln`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`useragentid` = `ln`.`id`
+   GROUP BY `ln`.`ua_device_brand`
+   ORDER BY `ln`.`ua_device_brand`;
+-- # Start of file: access_useragent_device_family_list.sql ---
+DROP VIEW IF EXISTS `access_useragent_device_family_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_useragent_device_family_list` AS
+     SELECT `ln`.`ua_device_family` AS `Device Family`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `access_log_useragent` `ln`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`useragentid` = `ln`.`id`
+   GROUP BY `ln`.`ua_device_family`
+   ORDER BY `ln`.`ua_device_family`;
+-- # Start of file: access_useragent_device_list.sql ---
+DROP VIEW IF EXISTS `access_useragent_device_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_useragent_device_list` AS
+     SELECT `ln`.`ua_device` AS `Device`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `access_log_useragent` `ln`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`useragentid` = `ln`.`id`
+   GROUP BY `ln`.`ua_device`
+   ORDER BY `ln`.`ua_device`;
+
+-- # Start of file: access_useragent_device_model_list.sql ---
+DROP VIEW IF EXISTS `access_useragent_device_model_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_useragent_device_model_list` AS
+     SELECT `ln`.`ua_device_model` AS `Device Model`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `access_log_useragent` `ln`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`useragentid` = `ln`.`id`
+   GROUP BY `ln`.`ua_device_model`
+   ORDER BY `ln`.`ua_device_model`;
+-- # Start of file: access_useragent_list.sql ---
+DROP VIEW IF EXISTS `access_useragent_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_useragent_list` AS
+     SELECT `ln`.`name` AS `Access Log UserAgent`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `access_log_useragent` `ln`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`useragentid` = `ln`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: access_useragent_os_browser_device_list.sql ---
+DROP VIEW IF EXISTS `access_useragent_os_browser_device_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_useragent_os_browser_device_list` AS
+     SELECT `ln`.`ua_os_family` AS `Operating System`,
+            `ln`.`ua_browser_family` AS `Browser`,
+            `ln`.`ua_device_family` AS `Device`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `access_log_useragent` `ln`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`useragentid` = `ln`.`id`
+   GROUP BY `ln`.`ua_os_family`,
+            `ln`.`ua_browser_family`,
+            `ln`.`ua_device_family`
+   ORDER BY `ln`.`ua_os_family`, 
+            `ln`.`ua_browser_family`,
+            `ln`.`ua_device_family`;
+-- # Start of file: access_useragent_os_family_list.sql ---
+DROP VIEW IF EXISTS `access_useragent_os_family_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_useragent_os_family_list` AS
+     SELECT `ln`.`ua_os_family` AS `Operating System Family`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `access_log_useragent` `ln`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`useragentid` = `ln`.`id`
+   GROUP BY `ln`.`ua_os_family`
+   ORDER BY `ln`.`ua_os_family`;
+-- # Start of file: access_useragent_os_list.sql ---
+DROP VIEW IF EXISTS `access_useragent_os_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_useragent_os_list` AS
+     SELECT `ln`.`ua_os` AS `Operating System`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `access_log_useragent` `ln`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`useragentid` = `ln`.`id`
+   GROUP BY `ln`.`ua_os`
+   ORDER BY `ln`.`ua_os`;
+-- # Start of file: access_useragent_os_version_list.sql ---
+DROP VIEW IF EXISTS `access_useragent_os_version_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_useragent_os_version_list` AS
+     SELECT `ln`.`ua_os_version` AS `Operating System Version`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `access_log_useragent` `ln`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`useragentid` = `ln`.`id`
+   GROUP BY `ln`.`ua_os_version`
+   ORDER BY `ln`.`ua_os_version`;
+
+-- # Start of file: access_useragent_pretty_list.sql ---
+DROP VIEW IF EXISTS `access_useragent_pretty_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `access_useragent_pretty_list` AS
+     SELECT `ln`.`ua` AS `Access Log Pretty User Agent`,
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `access_log_useragent` `ln`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`useragentid` = `ln`.`id`
+   GROUP BY `ln`.`ua`
+   ORDER BY `ln`.`ua`;
+-- # Start of file: error_clientport_list.sql ---
+DROP VIEW IF EXISTS `error_clientport_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `error_clientport_list` AS
+     SELECT `ln`.`name` AS `Error Log Client Port`,
+            COUNT(`l`.`id`) AS `Log Count`
+       FROM `log_clientport` `ln`
+ INNER JOIN `error_log` `l` 
+         ON `l`.`clientportid` = `ln`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: error_client_clientport_list.sql ---
+DROP VIEW IF EXISTS `error_client_clientport_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `error_client_clientport_list` AS
+     SELECT `cn`.`name` AS `Error Log Server Name`,
+            `cp`.`name` AS `Server Port`,
+            COUNT(`l`.`id`) AS `Log Count` 
+       FROM `error_log` `l`
+ INNER JOIN `log_client` `cn`
+         ON `cn`.`id` = `l`.`clientid`
+ INNER JOIN `log_clientport` `cp`
+         ON `cp`.`id` = `l`.`clientportid`
+   GROUP BY `l`.`clientid`,
+            `l`.`clientportid`
+   ORDER BY `cn`.`name`,
+            `cp`.`name`;
+-- # Start of file: error_client_list.sql ---
+DROP VIEW IF EXISTS `error_client_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `error_client_list` AS
+     SELECT `ln`.`name` AS `Error Log Client Name`,
+            COUNT(`l`.`id`) AS `Log Count`
+       FROM `log_client` `ln`
+ INNER JOIN `error_log` `l` 
+         ON `l`.`clientid` = `ln`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: error_httpCode_list.sql ---
+DROP VIEW IF EXISTS `error_httpCode_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `error_httpCode_list` AS
+     SELECT `ln`.`name` AS `Error Log http Code`,
+            COUNT(`l`.`id`) AS `Log Count`
+       FROM `error_log_httpcode` `ln`
+ INNER JOIN `error_log` `l` 
+         ON `l`.`httpcodeid` = `ln`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: error_httpMessage_list.sql ---
+DROP VIEW IF EXISTS `error_httpMessage_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `error_httpMessage_list` AS
+     SELECT `ln`.`name` AS `Error Log http Message`,
+            COUNT(`l`.`id`) AS `Log Count`
+       FROM `error_log_httpmessage` `ln`
+ INNER JOIN `error_log` `l` 
+         ON `l`.`httpmessageid` = `ln`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: error_importfile_list.sql ---
+DROP VIEW IF EXISTS `error_importfile_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `error_importfile_list` AS
+     SELECT `ln`.`name` AS `Error Log Import File`, 
+            COUNT(`l`.`id`) AS `Log Count`
+       FROM `import_file` `ln`
+ INNER JOIN `error_log` `l` 
+         ON `l`.`importfileid` = `ln`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: error_level_list.sql ---
+DROP VIEW IF EXISTS `error_level_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `error_level_list` AS
+     SELECT `ln`.`name` AS `Error Log Level`, 
+            COUNT(`l`.`id`) AS `Log Count`
+       FROM `error_log_level` `ln`
+ INNER JOIN `error_log` `l` 
+         ON `l`.`loglevelid` = `ln`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: error_message_list.sql ---
+DROP VIEW IF EXISTS `error_message_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `error_message_list` AS
+     SELECT `ln`.`name` AS `Error Log Message`,
+            COUNT(`l`.`id`) AS `Log Count`
+       FROM `error_log_message` `ln`
+ INNER JOIN `error_log` `l` 
+         ON `l`.`logmessageid` = `ln`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: error_module_list.sql ---
+DROP VIEW IF EXISTS `error_module_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `error_module_list` AS
+     SELECT `ln`.`name` AS `Error Log Module`,
+            COUNT(`l`.`id`) AS `Log Count`
+       FROM `error_log_module` `ln`
+ INNER JOIN `error_log` `l` 
+         ON `l`.`moduleid` = `ln`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: error_period_day_list.sql ---
+DROP VIEW IF EXISTS `error_period_day_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `error_period_day_list` AS
+     SELECT YEAR(l.logged) 'Year',
+            MONTH(l.logged) 'Month',
+            DAY(l.logged) 'Day',
+            COUNT(`l`.`id`) AS `Log Count`
+       FROM `error_log` `l`
+   GROUP BY YEAR(l.logged),
+            MONTH(l.logged),
+            DAY(l.logged)
+   ORDER BY 'Year',
+            'Month',
+            'Day'; 
+-- # Start of file: error_period_hour_list.sql ---
+DROP VIEW IF EXISTS `error_period_hour_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `error_period_hour_list` AS
+     SELECT YEAR(l.logged) 'Year',
+            MONTH(l.logged) 'Month',
+            DAY(l.logged) 'Day',
+            HOUR(l.logged) 'Hour',
+            COUNT(`l`.`id`) AS `Log Count`
+       FROM `error_log` `l`
+   GROUP BY YEAR(l.logged),
+            MONTH(l.logged),
+            DAY(l.logged),
+            HOUR(l.logged)
+   ORDER BY 'Year',
+            'Month',
+            'Day',
+            'Hour';
+-- # Start of file: error_period_month_list.sql ---
+DROP VIEW IF EXISTS `error_period_month_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `error_period_month_list` AS
+    SELECT YEAR(l.logged) 'Year',
+           MONTH(l.logged) 'Month',
+           COUNT(`l`.`id`) AS `Log Count`
+      FROM `error_log` `l`
+  GROUP BY YEAR(l.logged),
+           MONTH(l.logged)
+  ORDER BY 'Year',
+           'Month'; 
+-- # Start of file: error_period_week_list.sql ---
+DROP VIEW IF EXISTS `error_period_week_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `error_period_week_list` AS
+     SELECT YEAR(l.logged) 'Year',
+            MONTH(l.logged) 'Month',
+            WEEK(l.logged) 'Week',
+            COUNT(`l`.`id`) AS `Log Count`
+       FROM `error_log` `l`
+   GROUP BY YEAR(l.logged),
+            MONTH(l.logged),
+            WEEK(l.logged)
+   ORDER BY 'Year',
+            'Month',
+            'Week'; 
+-- # Start of file: error_period_year_list.sql ---
+DROP VIEW IF EXISTS `error_period_year_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `error_period_year_list` AS
+     SELECT YEAR(l.logged) 'Year',
+            COUNT(`l`.`id`) AS `Log Count`
+       FROM `error_log` `l`
+   GROUP BY YEAR(l.logged)
+   ORDER BY 'Year'; 
+-- # Start of file: error_processid_list.sql ---
+DROP VIEW IF EXISTS `error_processid_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `error_processid_list` AS
+     SELECT `ln`.`name` AS `Error Log ProcessID`,
+            COUNT(`l`.`id`) AS `Log Count`
+       FROM `error_log_processid` `ln`
+ INNER JOIN `error_log` `l` 
+         ON `l`.`processid` = `ln`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: error_processid_threadid_list.sql ---
+DROP VIEW IF EXISTS `error_processid_threadid_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `error_processid_threadid_list` AS
+     SELECT `pid`.`name` AS `ProcessID`,
+            `tid`.`name` AS `ThreadID`,
+            COUNT(`l`.`id`) AS `Log Count`
+       FROM `error_log` `l`
+ INNER JOIN `error_log_processid` `pid`
+         ON `l`.`processid` = `pid`.`id`
+ INNER JOIN `error_log_threadid` `tid`
+         ON `l`.`threadid` = `tid`.`id`
+   GROUP BY `pid`.`id`,
+            `tid`.`id`
+   ORDER BY `pid`.`name`,
+            `tid`.`name`;
+-- # Start of file: error_referer_list.sql ---
+DROP VIEW IF EXISTS `error_referer_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `error_referer_list` AS
+     SELECT `ln`.`name` AS `Error Log Referer`,
+            COUNT(`l`.`id`) AS `Log Count`
+       FROM `log_referer` `ln`
+ INNER JOIN `error_log` `l` 
+         ON `l`.`refererid` = `ln`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: error_serverport_list.sql ---
+DROP VIEW IF EXISTS `error_serverport_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `error_serverport_list` AS
+     SELECT `ln`.`name` AS `Error Log Server Port`,
+            COUNT(`l`.`id`) AS `Log Count` 
+       FROM `log_serverport` `ln`
+ INNER JOIN `error_log` `l` 
+         ON `l`.`serverportid` = `ln`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: error_server_list.sql ---
+DROP VIEW IF EXISTS `error_server_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `error_server_list` AS
+     SELECT `ln`.`name` AS `Error Log Server Name`,
+            COUNT(`l`.`id`) AS `Log Count` 
+       FROM `log_server` `ln`
+ INNER JOIN `error_log` `l` 
+         ON `l`.`serverid` = `ln`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: error_server_serverport_list.sql ---
+DROP VIEW IF EXISTS `error_server_serverport_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `error_server_serverport_list` AS
+     SELECT `sn`.`name` AS `Error Log Server Name`,
+            `sp`.`name` AS `Server Port`,
+            COUNT(`l`.`id`) AS `Log Count` 
+       FROM `error_log` `l`
+ INNER JOIN `log_server` `sn`
+         ON `sn`.`id` = `l`.`serverid`
+ INNER JOIN `log_serverport` `sp`
+         ON `sp`.`id` = `l`.`serverportid`
+   GROUP BY `l`.`serverid`,
+            `l`.`serverportid`
+   ORDER BY `sn`.`name`,
+	          `sp`.`name`;
+-- # Start of file: error_systemCode_list.sql ---
+DROP VIEW IF EXISTS `error_systemCode_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `error_systemCode_list` AS
+     SELECT `ln`.`name` AS `Error Log System Code`,
+            COUNT(`l`.`id`) AS `Log Count`
+       FROM `error_log_systemcode` `ln`
+ INNER JOIN `error_log` `l` 
+         ON `l`.`systemcodeid` = `ln`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: error_systemMessage_list.sql ---
+DROP VIEW IF EXISTS `error_systemMessage_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `error_systemMessage_list` AS
+     SELECT `ln`.`name` AS `Error Log System Message`,
+            COUNT(`l`.`id`) AS `Log Count`
+       FROM `error_log_systemmessage` `ln`
+ INNER JOIN `error_log` `l` 
+         ON `l`.`systemmessageid` = `ln`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: error_threadid_list.sql ---
+DROP VIEW IF EXISTS `error_threadid_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `error_threadid_list` AS
+     SELECT `ln`.`name` AS `Error Log ThreadID`,
+            COUNT(`l`.`id`) AS `Log Count`
+       FROM `error_log_threadid` `ln`
+ INNER JOIN `error_log` `l` 
+         ON `l`.`threadid` = `ln`.`id`
+   GROUP BY `ln`.`id`
+   ORDER BY `ln`.`name`;
+-- # Start of file: import_file_access_list.sql ---
+DROP VIEW IF EXISTS `import_file_access_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `import_file_access_list` AS
+     SELECT `ln`.`name` AS `Import File`, 
+            COUNT(`l`.`id`) AS `Log Count`, 
+            SUM(`l`.`reqbytes`) AS `HTTP Bytes`, 
+            SUM(`l`.`bytes_sent`) AS `Bytes Sent`, 
+            SUM(`l`.`bytes_received`) AS `Bytes Received`,
+            SUM(`l`.`bytes_transferred`) AS `Bytes Transferred`,
+            MAX(`l`.`reqtime_milli`) AS `Max Request Time`,
+            MIN(`l`.`reqtime_milli`) AS `Min Request Time`,
+            MAX(`l`.`reqdelay_milli`) AS `Max Delay Time`,
+            MIN(`l`.`reqdelay_milli`) AS `Min Delay Time`
+       FROM `import_file` `ln`
+ INNER JOIN `access_log` `l` 
+         ON `l`.`importfileid` = `ln`.`id`
+   GROUP BY `ln`.`name`
+   ORDER BY `ln`.`name`;
+-- # Start of file: import_file_error_list.sql ---
+DROP VIEW IF EXISTS `import_file_error_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `import_file_error_list` AS
+     SELECT `ln`.`name` AS `Import File`, 
+            COUNT(`l`.`id`) AS `Log Count`
+       FROM `import_file` `ln`
+ INNER JOIN `error_log` `l` 
+         ON `l`.`importfileid` = `ln`.`id`
+   GROUP BY `ln`.`name`
+   ORDER BY `ln`.`name`;
+-- # Start of file: log_clientport_list.sql ---
+DROP VIEW IF EXISTS `log_clientport_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `log_clientport_list` AS
+SELECT `name` AS `Client Port`,
+       `clientPortID_logs`(id, 'A') AS `Access Log Count`, 
+       `clientPortID_logs`(id, 'E') AS `Error Log Count` 
+  FROM `log_clientport`
+ORDER BY `name`;
+-- # Start of file: log_client_list.sql ---
+DROP VIEW IF EXISTS `log_client_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `log_client_list` AS
+SELECT `name` AS `Client Name`,
+       `clientID_logs`(id, 'A') AS `Access Log Count`, 
+       `clientID_logs`(id, 'E') AS `Error Log Count` 
+  FROM `log_client`
+ORDER BY `name`;
+-- # Start of file: log_referer_list.sql ---
+DROP VIEW IF EXISTS `log_referer_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `log_referer_list` AS
+SELECT `name` AS `Referer`,
+       `refererID_logs`(id, 'A') AS `Access Log Count`, 
+       `refererID_logs`(id, 'E') AS `Error Log Count` 
+  FROM `log_referer`
+ORDER BY `name`;
+-- # Start of file: log_requestlog_list.sql ---
+DROP VIEW IF EXISTS `log_requestlog_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `log_requestlog_list` AS
+SELECT `name` AS `Request Log`,
+       `requestlogID_logs`(id, 'A') AS `Access Log Count`, 
+       `requestlogID_logs`(id, 'E') AS `Error Log Count` 
+  FROM `log_requestlogid`
+ORDER BY `name`;
+-- # Start of file: log_serverport_list.sql ---
+DROP VIEW IF EXISTS `log_serverport_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `log_serverport_list` AS
+SELECT `name` AS `Server Port`,
+       `serverPortID_logs`(id, 'A') AS `Access Log Count`, 
+       `serverPortID_logs`(id, 'E') AS `Error Log Count` 
+  FROM `log_serverport`
+ORDER BY `name`;
+-- # Start of file: log_server_list.sql ---
+DROP VIEW IF EXISTS `log_server_list`;
+-- create table ---------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `log_server_list` AS
+SELECT `name` AS `Server Name`,
+       `serverID_logs`(id, 'A') AS `Access Log Count`, 
+       `serverID_logs`(id, 'E') AS `Error Log Count` 
+  FROM `log_server`
+ORDER BY `name`;
 -- # Start of file: access_clientcity_list.sql ---
 DROP VIEW IF EXISTS `access_clientcity_list`;
 -- create table ---------------------------------------------------------

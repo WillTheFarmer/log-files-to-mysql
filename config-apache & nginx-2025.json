@@ -1,0 +1,239 @@
+{
+  "mysql": {
+    "host": "localhost",
+    "port": 3606,
+    "user": "http_upload",
+    "password": "Just4TheData",
+    "schema": "http_logs"
+  },
+  "backup": {
+    "days": 0,
+    "path": "data/backup_files/"
+  },
+  "observers": [
+  ],
+  "processes": [
+    {
+      "id": "apacheErrorLoad",
+      "name": "Apache Error Load",
+      "description": "Sucks up all error files for 2025",
+      "module_name": "data_file_loader",
+      "group": "Apache Error",
+      "status": "Active",
+      "attributes": {
+        "print": 2,
+        "log_format": "apache_error",
+        "load_table": "load_error_apache",
+        "path": "/Users/farmf/Documents/apacheLogs/2025_apache/**/*error*.*",
+        "recursive": true,
+        "server": "mydomain.com",
+        "server_port": 443
+      }
+    },
+    {
+      "id": "apacheErrorParse",
+      "name": "Apache Error Parse",
+      "description": "Apache Error parse process at database",
+      "module_name": "database_module",
+      "group": "Apache Error",
+      "status": "Active",
+      "attributes": {
+        "print": 2,
+        "module_name": "parse_error_apache",
+        "module_parm1": "python"
+      }
+    },
+    {
+      "id": "apacheErrorImport",
+      "name": "Apache Error Import",
+      "description": "Apache Error import process at database",
+      "module_name": "database_module",
+      "group": "Apache Error",
+      "status": "Active",
+      "attributes": {
+        "print": 2,
+        "module_name": "import_error_apache",
+        "module_parm1": "python"
+      }
+    },
+    {
+      "id": "apacheCsv2mysqlLoad",
+      "name": "Apache Access CSV Load",
+      "description": "Sucks up all access files CSV format for 2025",
+      "module_name": "data_file_loader",
+      "group": "Apache Csv2mysql",
+      "status": "Active",
+      "attributes": {
+        "print": 2,
+        "log_format": "apache_csv2mysql",
+        "load_table": "load_access_csv",
+        "path": "/Users/farmf/Documents/apacheLogs/2025_apache/**/*access*.*",
+        "recursive": true,
+        "server": "mydomain.com",
+        "server_port": 443
+      }
+    },
+    {
+      "id": "apacheCsv2mysqlParse",
+      "name": "Apache Csv22mysql Parse",
+      "description": "Access Csv2mysql logs parse process at database",
+      "module_name": "database_module",
+      "group": "Apache Csv2mysql",
+      "status": "Active",
+      "attributes": {
+        "print": 2,
+        "module_name": "parse_access_apache_csv2mysql",
+        "module_parm1": "python"
+      }
+    },
+    {
+      "id": "apacheCsv2mysqlImport",
+      "name": "Apache Csv2mysql Import",
+      "description": "Access Csv2mysql logs import process at database",
+      "module_name": "database_module",
+      "group": "Apache Csv2mysql",
+      "status": "Active",
+      "attributes": {
+        "print": 2,
+        "module_name": "import_access_apache_csv2mysql",
+        "module_parm1": "python"
+      }
+    },
+    {
+      "id": "nginxErrorLoad",
+      "name": "NGINX Error Load",
+      "description": "Sucks up all NGINX error files for 2025",
+      "module_name": "data_file_loader",
+      "group": "Nginx Error",
+      "status": "Active",
+      "attributes": {
+        "print": 2,
+        "log_format": "nginx_error",
+        "load_table": "load_error_nginx",
+        "path": "/Users/farmf/Documents/apacheLogs/2025_nginx/**/*error*.*",
+        "recursive": true,
+        "server": "mydomain.com",
+        "server_port": 443
+      }
+    },
+    {
+      "id": "nginxErrorParse",
+      "name": "NGINX Error Parse",
+      "description": "NGINX error logs being parsed database.",
+      "module_name": "database_module",
+      "group": "Nginx Error",
+      "status": "InActive",
+      "attributes": {
+        "print": 2,
+        "module_name": "parse_error_nginx",
+        "module_parm1": "python"
+      }
+    },
+    {
+      "id": "nginxErrorImport",
+      "name": "NGINX Error Import",
+      "description": "NGINX error logs being imported database.",
+      "module_name": "database_module",
+      "group": "Nginx Error",
+      "status": "InActive",
+      "attributes": {
+        "print": 2,
+        "module_name": "import_error_nginx",
+        "module_parm1": "python"
+      }
+    },
+    {
+      "id": "nginxDefaultLoad",
+      "name": "NGINX Default Load",
+      "description": "Sucks up all NGINX access files Default format for 2025",
+      "module_name": "data_file_loader",
+      "group": "Nginx",
+      "status": "Active",
+      "attributes": {
+        "print": 2,
+        "log_format": "nginx_default",
+        "load_table": "load_access_nginx",
+        "path": "/Users/farmf/Documents/apacheLogs/2025_nginx/**/*access*.*",
+        "recursive": true,
+        "server": "mydomain.com",
+        "server_port": 443
+      }
+    },
+    {
+      "id": "nginxDefaultParse",
+      "name": "NGINX Default Parse",
+      "description": "NGINX Access Default being parsed at database",
+      "module_name": "database_module",
+      "group": "Nginx",
+      "status": "Active",
+      "attributes": {
+        "print": 2,
+        "module_name": "parse_access_nginx_default",
+        "module_parm1": "python"
+      }
+    },
+    {
+      "id": "nginxDefaultImport",
+      "name": "NGINX Default Import",
+      "description": "NGINX Access Default being imported at database",
+      "module_name": "database_module",
+      "group": "Nginx Default",
+      "status": "Active",
+      "attributes": {
+        "print": 2,
+        "module_name": "import_access_nginx_default",
+        "module_parm1": "python"
+      }
+    },
+    {
+      "id": "useragentEnrichment",
+      "name": "User Agent Parsing",
+      "description": "Slices and Dices your string process at Client",
+      "module_name": "data_enrichment_userAgent",
+      "group": "DataEnhance",
+      "status": "Active",
+      "attributes": {
+        "print": 1
+      }
+    },
+    {
+      "id": "useragentImport",
+      "name": "User Agent Normalization",
+      "description": "Normalizing User Agent data process at database",
+      "module_name": "database_module",
+      "group": "DataEnhance",
+      "status": "Active",
+      "attributes": {
+        "print": 1,
+        "module_name": "normalize_useragent",
+        "module_parm1": "Python Processed"
+      }
+    },
+    {
+      "id": "geoipEnrichment",
+      "name": "IP Address Data Extraction",
+      "description": "Geolocation information related to IP process at Client",
+      "module_name": "data_enrichment_geoIP",
+      "group": "DataEnhance",
+      "status": "Active",
+      "attributes": {
+        "print": 1,
+        "city": "data/downloads/maxmind/GeoLite2-City.mmdb",
+        "asn": "data/downloads/maxmind/GeoLite2-ASN.mmdb"
+      }
+    },
+    {
+      "id": "geoipImport",
+      "name": "IP Address Normalizing",
+      "description": "Normalizing IP Address data process at database",
+      "module_name": "database_module",
+      "group": "DataEnhance",
+      "status": "Active",
+      "attributes": {
+        "print": 1,
+        "module_name": "normalize_client",
+        "module_parm1": "Python Processed"
+      }
+    }
+  ]
+}
