@@ -304,7 +304,7 @@
       "attributes": {
         "print": 2,
         "log_format": "nginx_default",
-        "load_table": "load_access_nginx_default_default",
+        "load_table": "load_access_nginx_default",
         "path": "data/nginx_default/**/*access*.*",
         "recursive": true,
         "server": "mydomain.com",

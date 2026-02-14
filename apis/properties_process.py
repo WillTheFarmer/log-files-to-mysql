@@ -30,8 +30,8 @@ class ProcessProperties:
     def process_report(cls):
         process_data = {
             "Files Found": cls.files_found,
-            "Files Loaded": cls.files_processed,
-            "Records Loaded": cls.records_processed,
+            "Files Processed": cls.files_processed,
+            "Records Processed": cls.records_processed,
             "Warnings":  cls.warning_count,
             "Errors":  cls.error_count,
             "Process Seconds":  cls.process_seconds,

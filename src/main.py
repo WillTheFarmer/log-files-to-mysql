@@ -30,6 +30,8 @@
 # used for app.expandUser
 from os import path
 
+import MySQLdb
+
 # used to ID computer process is running on.
 from os import getlogin
 from platform import processor
@@ -102,11 +104,77 @@ if config:
 
 def update_import_process(data):
 
+    loadUpdateSQL = (
+        f"SELECT process_name, "
+        f"module_name, " 
+        f"files_found, "
+        f"files_processed, "
+        f"records_processed, "
+        f"loads_processed, "
+        f"error_count, "
+        f"process_seconds, " 
+        f"started, " 
+        f"completed FROM import_process WHERE id = {app.importProcessID};"
+    )
+
+    print(loadUpdateSQL)
+
+    try:
+        app.cursor.execute( loadUpdateSQL )
+
+        result = app.cursor.fetchone()
+            
+        if result:
+            # fetchone() returns a tuple, e.g., (123,)
+
+            print( result )
+
+            process_name = result[0]
+            process_module_name = result[1]
+            process_files_found = result[2]
+            process_files_processed = result[3]
+            process_records_processed = result[4]
+            process_loaded_processed = result[5]
+            process_error_count = result[6]
+            process_process_seconds = result[7]
+            process_started = result[8]
+            process_completed = result[9]
+
+            print(f"process_name : {color.fg.GREEN}{process_name}{color.END} " \
+                f"module_name : {color.fg.GREEN}{process_module_name}{color.END} " \
+                f"files_found : {color.fg.GREEN}{process_files_found}{color.END} " \
+                f"files_processed : {color.fg.GREEN}{process_files_processed}{color.END} " \
+                f"records_processed : {color.fg.GREEN}{process_records_processed}{color.END}" \
+                f"loaded_processed : {color.fg.GREEN}{process_loaded_processed}{color.END}" \
+                f"error_count : {color.fg.GREEN}{process_error_count}{color.END}" \
+                f"process_seconds : {color.fg.GREEN}{process_process_seconds}{color.END}" \
+                f"process_started : {color.fg.GREEN}{process_started}{color.END}" \
+                f"process_completed : {color.fg.GREEN}{process_completed}{color.END}")
+
+            data["Files Found"] = process_files_found
+            data["Files Processed"] = process_files_processed
+            data["Records Processed"] = process_records_processed
+            data["Errors"] = process_error_count
+            data["Warnings"] = 0
+            data["Process Seconds"] = process_process_seconds
+            data["Status"] = None
+
+    except MySQLdb.Error as e:
+        app.error_count += 1
+        add_message( 0, e , __name__ , type(e).__name__ ,  e)
+
+    except Exception as e:
+        app.error_count += 1
+        add_message( 0, e , __name__ , type(e).__name__ ,  e)
+
+    # commit and close 
+    # app.dbConnection.commit()
     # update import_process record ID = app.importProcessID
     if data.get("process_errors") == 0: 
        """ update import_process.completed = now() """
 
     #print(f"UPDATE import_process with {data} where id = {app.importProcessID}")
+    return data
 
 def execute_process(process):
     # process info to feed to processes
@@ -139,10 +207,12 @@ def execute_process(process):
             if data:
                 app.executeSeconds = perf_counter() - app.executeStart
 
-                # print(data)
+                print(data)
 
                 # method to call TABLE UPDATE - 
-                #update_import_process(data)
+                if module_name =="database_module":
+                    data = update_import_process(data)
+                    print(data)
 
                 # print(data)
                 # add import process information for summary report
