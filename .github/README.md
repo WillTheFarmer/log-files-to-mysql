@@ -83,7 +83,7 @@ Single quotes around 'PyMySQL[rsa]' package required on macOS.
 ![Entity Relationship Diagram](./images/entity_relationship_diagram.png)
 
 ## MySQL database schema DDL and build scripts
-[mysql-schema-http-logs](https://github.com/willthefarmer/mysql-schema-http-logs) includes all ***database DDL and build scripts*** for the database schema used in this repository.
+[mysql-http-logs](https://github.com/willthefarmer/mysql-http-logs) includes all ***database DDL and build scripts*** for the database schema used in this repository.
 
 Application determines what files have been processed using `import_file` TABLE. 
 Each imported file has record with name, path, size, created, modified attributes inserted during `main:process_files`.
@@ -107,7 +107,7 @@ Each log format has a Stored Procedure. More information will be added over new 
 The Apache and NGINX code demonstrates how to incorporate without code modification of current processes.
 
 ## Visual Interface App
-in my development queue [MySQL2ApacheECharts](https://github.com/willthefarmer/mysql-to-apache-echarts) is a ***visualization tool*** for the database schema. The Web interface consists of [Express](https://github.com/expressjs/express) web application frameworks with [W2UI](https://github.com/vitmalina/w2ui) drill-down data grids for Data Point Details.
+in my development queue [MySQL2ApacheECharts](https://github.com/willthefarmer/mysql-to-echarts) is a ***visualization tool*** for the database schema. The Web interface consists of [Express](https://github.com/expressjs/express) web application frameworks with [W2UI](https://github.com/vitmalina/w2ui) drill-down data grids for Data Point Details.
 
 ## Other Documents
 
