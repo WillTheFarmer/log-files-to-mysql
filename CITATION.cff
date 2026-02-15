@@ -2,7 +2,7 @@
 # Visit https://bit.ly/cffinit to generate yours today!
 
 cff-version: 1.2.0
-title: httpLogs2MySQL
+title: logFiles2MySQL
 message: >-
   If you use this software, please cite it using the
   metadata from this file.
@@ -18,7 +18,7 @@ identifiers:
 repository-code: 'https://github.com/WillTheFarmer/http-logs-to-mysql'
 url: 'https://willthefarmer.github.io'
 abstract: >-
-  httpLogs2MySQL includes a data-driven Python module es, SQL schema 
+  logFiles2MySQL includes a data-driven Python module es, SQL schema 
   script file, JSON file and ENV file. Python module 'main:process_logs'
   handles file processing and execution of MySQL LOAD DATA
   statements, stored procedures and SQL statements. Python module

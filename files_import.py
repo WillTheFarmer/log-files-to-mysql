@@ -11,7 +11,7 @@
 # CHANGELOG.md in repository - https://github.com/WillTheFarmer/http-logs-to-mysql
 """
 :script: files_import.py
-:synopsis: Executes all active (status='Active') processes in config.json collection for httpLogs2MySQL application.
+:synopsis: Executes all active (status='Active') processes in config.json collection for logFiles2MySQL application.
 :author: Will Raymond <farmfreshsoftware@gmail.com>
 """
 from src import main

@@ -12,7 +12,7 @@
 #
 # module: dataEnrichment_userAgent.py
 # function: process()
-# synopsis: processes HTTP access and error logs into MySQL or MariaDB for httpLogs2MySQL application.
+# synopsis: processes HTTP access and error logs into MySQL or MariaDB for logFiles2MySQL application.
 # author: Will Raymond <farmfreshsoftware@gmail.com>
 
 # application-level properties and references shared across app modules (files) 

@@ -10,7 +10,7 @@
 #
 # CHANGELOG.md in repository - https://github.com/WillTheFarmer/http-logs-to-mysql
 #
-# Processes Apache & NGINX logs into normalized MySQL schema for httpLogs2MySQL application.
+# Processes Apache & NGINX logs into normalized MySQL schema for logFiles2MySQL application.
 # module: main.py
 # function: process_files()
 # module: import_processes.py
@@ -369,7 +369,7 @@ def process_files(process_list=[]):
           f"Execution time: {app.process_seconds:.4f} seconds{color.END}")
     
     # Print application footer
-    print(f"{color.fg.GREEN}{color.style.NORMAL}httpLogs2MySQL application{color.END} | " \
+    print(f"{color.fg.GREEN}{color.style.NORMAL}logFiles2MySQL application{color.END} | " \
           f"Import all Files in Folders: {color.fg.GREEN}{color.style.NORMAL}files_import.py{color.END} | " \
           f"Watch for new Files in Folders: {color.fg.GREEN}{color.style.NORMAL}files_watch.py{color.END} | " \
           f"Process & Observer Property Lists: {color.fg.GREEN}{color.style.NORMAL}config_lists.py{color.END}")

@@ -11,7 +11,7 @@
 # CHANGELOG.md in repository - https://github.com/WillTheFarmer/http-logs-to-mysql
 """
 :script: files_watch.py
-:synopsis: Polls paths in config.json collection for httpLogs2MySQL application. Event passes process_list & file to process_files() 
+:synopsis: Polls paths in config.json collection for logFiles2MySQL application. Event passes process_list & file to process_files() 
 :author: Will Raymond <farmfreshsoftware@gmail.com>
 """
 # To access a custom property of a watchdog event handler from your main While True loop, 

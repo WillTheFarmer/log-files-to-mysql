@@ -1,6 +1,6 @@
 """
 :function: printColor module
-:synopsis: processes HTTP access and error logs into MySQL or MariaDB for httpLogs2MySQL application.
+:synopsis: processes HTTP access and error logs into MySQL or MariaDB for logFiles2MySQL application.
 :author: Will Raymond <farmfreshsoftware@gmail.com>
 """
 # Terminal color definitions - 02/06/2025

@@ -1,6 +1,6 @@
 """
 :function: get_device_id
-:synopsis: processes HTTP access and error logs into MySQL or MariaDB for httpLogs2MySQL application.
+:synopsis: processes HTTP access and error logs into MySQL or MariaDB for logFiles2MySQL application.
 :author: Will Raymond <farmfreshsoftware@gmail.com>
 """
 from platform import system

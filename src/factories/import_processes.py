@@ -12,7 +12,7 @@
 # 
 # module: import_processes.py
 # function: get_import_process()
-# synopsis: handles off the proper process to import load execution for httpLogs2MySQL application.
+# synopsis: handles off the proper process to import load execution for logFiles2MySQL application.
 # author: Will Raymond <farmfreshsoftware@gmail.com>
 
 # application-level error handle
