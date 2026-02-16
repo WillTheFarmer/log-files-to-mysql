@@ -1,7 +1,7 @@
 ## Python handles File processing & Database handles Data processing
 
 ### Application runs on Windows, Linux & MacOS - Database runs on MySQL & MariaDB
-***JSON data-driven*** App & growing number of MySQL schemas to automate import of files, build custom ***"file data ingestion methods"*** into MySQL & MariaDB databases and generate a well-documented data lineage audit trail.
+***JSON data-driven*** App & growing number of MySQL schemas to automate import of files, build custom ***"file data ingestion methods"*** into MySQL or MariaDB databases and generate a well-documented data lineage audit trail.
 
 Each ***"file data ingestion method"*** has separate repositor with database schema designed for files-to-MySQL.
 
