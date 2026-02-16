@@ -14,8 +14,8 @@ authors:
     affiliation: Farm Fresh Software
 identifiers:
   - type: url
-    value: 'https://github.com/WillTheFarmer/http-logs-to-mysql'
-repository-code: 'https://github.com/WillTheFarmer/http-logs-to-mysql'
+    value: 'https://github.com/WillTheFarmer/files-to-mysql'
+repository-code: 'https://github.com/WillTheFarmer/files-to-mysql'
 url: 'https://willthefarmer.github.io'
 abstract: >-
   logFiles2MySQL includes a data-driven Python module es, SQL schema 

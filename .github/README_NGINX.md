@@ -1,4 +1,4 @@
-# NGINX Configuration for http-logs-to-mysql (csv2mysql format)
+# NGINX Configuration for files-to-mysql (csv2mysql format)
 # Duplicate of Apache csv2mysql: %v,%p,%h,%l,%u,%t,%I,%O,%S,%B,%{ms}T,%D,%^FB,%>s,"%H","%m","%U","%q","%{Referer}i","%{User-Agent}i","%{VARNAME}C",%L
 # apache
 # LogFormat "%v,%p,%h,%l,%u,%t,%I,%O,%S,%B,%{ms}T,%D,%^FB,%>s,\"%H\",\"%m\",\"%U\",\"%q\",\"%{Referer}i\",\"%{User-Agent}i\",\"%{VARNAME}C\",%L" csv2mysql

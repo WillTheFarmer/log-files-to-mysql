@@ -143,6 +143,6 @@
 - [3.3.1] MariaDB and MySQL version-specific code implementation using - /*M!100500 and /*!50700 for index creation and adding system variables MySQL @@server_uuid and MariaDB @@server_uid.
 - [3.3.1] increased column widths for LOAD TABLES - `first_line_request`, `req_uri`, `req_query` and decreased `useragent` to handle LimitRequestLine 8190 - https://httpd.apache.org/docs/2.2/mod/core.html#limitrequestline' 
 - [3.3.1] increased column width from 2000 to 5000 for TABLE `access_log_reqquery` and modified FUNCTION `access_reqQueryID` increased in_ReqQuery VARCHAR(2000) to VARCHAR(5000)
-- [4.0.0] - 01/21/2026 - separation of python app code and database schema code from http-logs-to-mysql repository. Find database schema code at mysql-http-logs
+- [4.0.0] - 01/21/2026 - separation of python app code and database schema code from files-to-mysql repository. Find database schema code at mysql-http-logs
 - [4.0.1] - 02/03/2026 - Groundhog - divided repositories caused some incorrect file versions being uploaded. All code uploaded is now latest. Working on data_file_loader.py updates now that completes re-write. separate Stored procedure for Each log format.
 - [4.0.2] - 02/13/2026 - INT to BIGINT, PyMSQL to MySQLdb, mysql procedures for each server & format, refinement of naming convention from load, parse and import - see changelog

@@ -13,4 +13,4 @@ This is the only schema table that uses ENGINE=MYISAM to avoid TRANSACTION ROLLB
 Logging functionality, database design and table relationship constraints produce both physical and logical integrity. 
 This enables a complete audit trail providing ability to determine who, what, when and where each log record originated from.
 
-Client `http-logs-to-mysql` module can run in [PM2](https://github.com/Unitech/pm2) daemon process manager or `logs2mysql` module run in [logrotate's](https://github.com/logrotate/logrotate) apache `postrotate` configuration for 24/7 online processing on multiple web servers feeding a single Server module simultaneous.
+Client `files-to-mysql` module can run in [PM2](https://github.com/Unitech/pm2) daemon process manager or `logs2mysql` module run in [logrotate's](https://github.com/logrotate/logrotate) apache `postrotate` configuration for 24/7 online processing on multiple web servers feeding a single Server module simultaneous.

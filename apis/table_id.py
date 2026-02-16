@@ -8,7 +8,7 @@
 #
 # version 4.0.2 - 02/13/2026 - INT to BIGINT, PyMSQL to MySQLdb, mysql procedures for each server & format - see changelog
 #
-# CHANGELOG.md in repository - https://github.com/WillTheFarmer/http-logs-to-mysql
+# CHANGELOG.md in repository - https://github.com/WillTheFarmer/files-to-mysql
 
 # application-level properties and references shared across app modules (files) 
 from apis.properties_app import app
