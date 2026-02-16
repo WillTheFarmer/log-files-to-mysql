@@ -1,5 +1,4 @@
 ## Python handles File processing & Database handles Data processing
-#### N2K info - MySQL http_logs broke into 2 MySQL schemas | file_ingest & http_logs | importfileid INT to BIGINT | NGINX fixed
 ![Entity Relationship Diagram](./images/import_load_summary.png)
 `main:process_files` Import Load Summary from ingesting log files included in repository.
 
